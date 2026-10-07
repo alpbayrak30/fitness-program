@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness & Antrenman Günlüğü</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b',
+                        bordercolor: '#334155',
+                        limeaccent: '#84cc16',
+                        limedark: '#65a30d'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js for Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-darkbg text-slate-100 min-h-screen font-sans flex flex-col md:flex-row antialiased selection:bg-limeaccent selection:text-slate-950 transition-colors duration-300">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden backdrop-blur-sm transition-opacity"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 w-64 bg-cardbg border-r border-bordercolor flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-xl">
+        <div class="p-6 border-b border-bordercolor flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-limeaccent text-slate-950 p-2.5 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-limeaccent/20">
+                    <i data-lucide="dumbbell" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-tight text-white">FitGünlük</h1>
+                    <p class="text-xs text-slate-400">Antrenman & Performans</p>
+                </div>
+            </div>
+            <button id="close-sidebar" class="md:hidden text-slate-400 hover:text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
+            <button onclick="switchTab('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left bg-limeaccent text-slate-950 shadow-lg shadow-limeaccent/10" data-target="dashboard">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                Ana Sayfa
+            </button>
+            <button onclick="switchTab('workout')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="workout">
+                <i data-lucide="dumbbell" class="w-5 h-5"></i>
+                Antrenman
+            </button>
+            <button onclick="switchTab('profile')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="profile">
+                <i data-lucide="user" class="w-5 h-5"></i>
+                Kişisel Bilgiler & Bilim
+            </button>
+            <button onclick="switchTab('overload')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="overload">
+                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                Progresive Overload
+            </button>
+            <button onclick="switchTab('history')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="history">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+                Geçmiş
+            </button>
+            <button onclick="switchTab('stats')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="stats">
+                <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+                İstatistikler
+            </button>
+            <button onclick="switchTab('records')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="records">
+                <i data-lucide="trophy" class="w-5 h-5"></i>
+                Rekorlar
+            </button>
+            <button onclick="switchTab('settings')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="settings">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                Ayarlar
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-bordercolor">
+            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-bordercolor/50 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-limeaccent font-bold shadow-inner">
+                        U
+                    </div>
+                    <div>
+                        <p id="sidebar-profile-name" class="text-xs font-semibold text-white">Sporcu Profilim</p>
+                        <p id="sidebar-profile-sub" class="text-[10px] text-slate-400">30 Yaş • 70 kg • 170 cm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 flex flex-col min-w-0">
+        <!-- Top Mobile Header -->
+        <header class="md:hidden bg-cardbg border-b border-bordercolor p-4 flex items-center justify-between sticky top-0 z-20 shadow-md">
+            <button id="open-sidebar" class="text-slate-300 hover:text-white p-1 transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <span class="font-bold text-base flex items-center gap-2 text-white">
+                <i data-lucide="dumbbell" class="w-5 h-5 text-limeaccent"></i>
+                FitGünlük
+            </span>
+            <div class="w-6"></div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+
+            <!-- ================= DASHBOARD TAB ================= -->
+            <section id="tab-dashboard" class="tab-content space-y-6 transition-all duration-300">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Fitness & Antrenman Günlüğü</h2>
+                        <p class="text-slate-400 text-sm mt-1">Antrenmanlarını kaydet, ilerlemeni takip et ve haftalık performansını analiz et.</p>
+                    </div>
+                    <button onclick="switchTab('workout'); initNewWorkout();" class="bg-limeaccent hover:bg-limedark text-slate-950 font-semibold px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-limeaccent/20 hover:scale-[1.02] active:scale-[0.98]">
+                        <i data-lucide="plus" class="w-5 h-5"></i>
+                        Yeni Antrenman
+                    </button>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm font-medium">Bu Haftaki Antrenman</span>
+                            <div class="p-2.5 bg-limeaccent/10 text-limeaccent rounded-xl">
+                                <i data-lucide="activity" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 id="dash-workouts-count" class="text-3xl font-extrabold tracking-tight text-white">0</h3>
+                            <p class="text-xs text-slate-400 mt-1">Tamamlanan seans</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm font-medium">Haftalık Tonaj</span>
+                            <div class="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl">
+                                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 id="dash-weekly-volume" class="text-3xl font-extrabold tracking-tight text-white">0 kg</h3>
+                            <p class="text-xs text-slate-400 mt-1">Toplam kaldırılan ağırlık</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm font-medium">Toplam Set</span>
+                            <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl">
+                                <i data-lucide="layers" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 id="dash-weekly-sets" class="text-3xl font-extrabold tracking-tight text-white">0</h3>
+                            <p class="text-xs text-slate-400 mt-1">Bu hafta tamamlanan set</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                        <div class="flex items-center justify-between">
+                            <span class="text-slate-400 text-sm font-medium">Toplam Tekrar</span>
+                            <div class="p-2.5 bg-purple-500/10 text-purple-400 rounded-xl">
+                                <i data-lucide="repeat" class="w-5 h-5"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h3 id="dash-weekly-reps" class="text-3xl font-extrabold tracking-tight text-white">0</h3>
+                            <p class="text-xs text-slate-400 mt-1">Bu hafta tamamlanan tekrar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weekly Chart & Summary Card Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col shadow-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                                <i data-lucide="bar-chart-2" class="w-5 h-5 text-limeaccent"></i>
+                                Haftalık Tonaj Dağılımı
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <button onclick="changeWeek(-1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow-sm" title="Önceki Hafta">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                                </button>
+                                <span id="current-week-label" class="text-xs font-semibold text-slate-300 px-2">Bu Hafta</span>
+                                <button onclick="changeWeek(1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow-sm" title="Sonraki Hafta">
+                                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex-1 relative min-h-[250px] flex items-center justify-center">
+                            <canvas id="weeklyVolumeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col justify-between shadow-lg">
+                        <div>
+                            <h3 class="font-bold text-lg text-white flex items-center gap-2 mb-4">
+                                <i data-lucide="award" class="w-5 h-5 text-limeaccent"></i>
+                                Bu Haftanın Özeti
+                            </h3>
+                            <div class="space-y-4" id="weekly-review-details">
+                                <div class="flex items-center justify-between py-2 border-b border-bordercolor/50">
+                                    <span class="text-sm text-slate-400">Antrenman Sayısı</span>
+                                    <span id="review-count" class="font-bold text-white">0</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-bordercolor/50">
+                                    <span class="text-sm text-slate-400">Toplam Tonaj</span>
+                                    <span id="review-volume" class="font-bold text-limeaccent">0 kg</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-bordercolor/50">
+                                    <span class="text-sm text-slate-400">Toplam Set / Tekrar</span>
+                                    <span id="review-sets-reps" class="font-bold text-white">0 / 0</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-sm text-slate-400">En Yüksek Tonajlı Seans</span>
+                                    <span id="review-best-session" class="font-bold text-white">-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-bordercolor">
+                            <button onclick="switchTab('history')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                                Geçmişe Git
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Workouts List -->
+                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5 text-limeaccent"></i>
+                            Son Antrenmanlar
+                        </h3>
+                        <button onclick="switchTab('history')" class="text-xs font-semibold text-limeaccent hover:underline">Tümünü Gör</button>
+                    </div>
+                    <div id="dashboard-recent-list" class="space-y-3"></div>
+                </div>
+            </section>
+
+            <!-- ================= WORKOUT TAB ================= -->
+            <section id="tab-workout" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 id="workout-section-title" class="text-2xl font-bold tracking-tight text-white">Antrenman Yönetimi</h2>
+                        <p id="workout-section-subtitle" class="text-slate-400 text-sm mt-1">Yeni bir seans başlat, hareketleri ve setleri anlık olarak takip et.</p>
+                    </div>
+                    <button onclick="cancelWorkout()" class="text-xs font-semibold text-red-400 hover:text-red-300 px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 transition-all">Seansı İptal Et</button>
+                </div>
+
+                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-6 shadow-xl">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Tarih</label>
+                            <input type="date" id="workout-date" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Antrenman Türü</label>
+                            <select id="workout-type" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                <option value="Push">Push (İtiş)</option>
+                                <option value="Pull">Pull (Çekiş)</option>
+                                <option value="Legs">Legs (Bacak)</option>
+                                <option value="Upper">Upper (Üst Vücut)</option>
+                                <option value="Lower">Lower (Alt Vücut)</option>
+                                <option value="Full Body">Full Body (Tüm Vücut)</option>
+                                <option value="Göğüs">Göğüs</option>
+                                <option value="Sırt">Sırt</option>
+                                <option value="Omuz">Omuz</option>
+                                <option value="Kol">Kol</option>
+                                <option value="Bacak">Bacak</option>
+                                <option value="Özel">Özel</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Antrenman Adı</label>
+                            <input type="text" id="workout-name" placeholder="Örn: Push A, Göğüs & Triceps" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                        </div>
+                    </div>
+
+                    <div class="border-t border-bordercolor pt-6 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-base text-white flex items-center gap-2">
+                                <i data-lucide="list-plus" class="w-5 h-5 text-limeaccent"></i>
+                                Hareketler ve Setler
+                            </h3>
+                            <button onclick="openExerciseModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors border border-bordercolor shadow-sm">
+                                <i data-lucide="plus" class="w-4 h-4 text-limeaccent"></i>
+                                + Hareket Ekle
+                            </button>
+                        </div>
+                        <div id="active-exercises-list" class="space-y-4"></div>
+                    </div>
+
+                    <div class="border-t border-bordercolor pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-6 text-sm">
+                            <div>
+                                <span class="text-slate-400 text-xs block">Toplam Tonaj</span>
+                                <span id="active-total-volume" class="font-extrabold text-white text-lg">0 kg</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 text-xs block">Toplam Set</span>
+                                <span id="active-total-sets" class="font-extrabold text-white text-lg">0</span>
+                            </div>
+                            <div>
+                                <span class="text-slate-400 text-xs block">Toplam Tekrar</span>
+                                <span id="active-total-reps" class="font-extrabold text-white text-lg">0</span>
+                            </div>
+                        </div>
+                        <button onclick="completeActiveWorkout()" class="w-full sm:w-auto bg-limeaccent hover:bg-limedark text-slate-950 font-bold px-8 py-3 rounded-xl transition-all shadow-lg shadow-limeaccent/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span id="complete-workout-btn-text">Antrenmanı Tamamla</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PROFILE & SCIENCE TAB ================= -->
+            <section id="tab-profile" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Kişisel Bilgiler & Bilimsel Antrenman Kılavuzu</h2>
+                    <p class="text-slate-400 text-sm mt-1">Antropometrik verilerini güncelleyebilir ve kas gruplarının haftalık çalışma sıklığına dair bilimsel rehberi inceleyebilirsin.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Personal Info Form Card -->
+                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 shadow-xl">
+                        <h3 class="font-bold text-lg text-white flex items-center gap-2 border-b border-bordercolor pb-3">
+                            <i data-lucide="user-cog" class="w-5 h-5 text-limeaccent"></i>
+                            Kişisel Bilgiler Paneli
+                        </h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Ad / Sporcu Adı</label>
+                                <input type="text" id="profile-input-name" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" placeholder="Adınız">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-400 mb-1">Yaş</label>
+                                    <input type="number" id="profile-input-age" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="30">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-400 mb-1">Cinsiyet</label>
+                                    <select id="profile-input-gender" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                        <option value="Erkek">Erkek</option>
+                                        <option value="Kadın">Kadın</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-400 mb-1">Kilo (kg)</label>
+                                    <input type="number" step="0.5" id="profile-input-weight" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="70">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-400 mb-1">Boy (cm)</label>
+                                    <input type="number" id="profile-input-height" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="170">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Antrenman Seviyesi</label>
+                                <select id="profile-input-level" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                    <option value="Başlangıç">Başlangıç (&lt; 1 yıl)</option>
+                                    <option value="Orta Seviye" selected>Orta Seviye (1-3 yıl)</option>
+                                    <option value="İleri Düzey">İleri Düzey (3+ yıl)</option>
+                                </select>
+                            </div>
+                            <button onclick="saveUserProfile()" class="w-full mt-2 bg-limeaccent hover:bg-limedark text-slate-950 font-bold py-2.5 rounded-xl transition-all text-sm flex items-center justify-center gap-2 shadow-md">
+                                <i data-lucide="save" class="w-4 h-4"></i> Bilgileri Kaydet
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Scientific Frequency Guidelines -->
+                    <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 shadow-xl">
+                        <div class="border-b border-bordercolor pb-3 flex items-center justify-between">
+                            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                                <i data-lucide="book-open" class="w-5 h-5 text-limeaccent"></i>
+                                Bilimsel Çalışmalara Göre Haftalık Sıklık Rehberi
+                            </h3>
+                            <span class="text-xs bg-limeaccent/10 text-limeaccent px-2.5 py-1 rounded-lg font-semibold">Hipertrofi Optimizasyonu</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Güncel egzersiz bilimi araştırmaları (Schoenfeld ve ark., 2016; Helms ve ark.), kas protein sentezinin (MPS) antrenmandan sonra yaklaşık 48 saat içinde bazal seviyelere döndüğünü göstermektedir. Bu nedenle, çoğu kas grubunun haftada <strong>2 ila 3 kez</strong> çalıştırılması, haftalık hacmin (set sayısının) bölünerek daha yüksek kaliteli tekrarlarla yapılmasına olanak tanır ve hipertrofiyi maksimize eder.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white text-sm">Göğüs (Chest)</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                </div>
+                                <p class="text-xs text-slate-400">İdeal Set: 10-16 set/hafta. Press ve fly hareketleri dengelenmelidir.</p>
+                            </div>
+
+                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white text-sm">Sırt (Back / Lats)</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                </div>
+                                <p class="text-xs text-slate-400">İdeal Set: 12-18 set/hafta. Hem dikey (pull-down) hem yatay çekişler şarttır.</p>
+                            </div>
+
+                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white text-sm">Bacak (Quadriceps & Hamstring)</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                </div>
+                                <p class="text-xs text-slate-400">İdeal Set: 12-16 set/hafta. Derin kas hasarı yarattığı için yeterli dinlenme şarttır.</p>
+                            </div>
+
+                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white text-sm">Omuz (Shoulders)</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                </div>
+                                <p class="text-xs text-slate-400">İdeal Set: 10-14 set/hafta. Özellikle yan omuz (lateral head) yüksek sıklığı çok iyi tolere eder.</p>
+                            </div>
+
+                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white text-sm">Kollar (Biceps & Triceps)</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                </div>
+                                <p class="text-xs text-slate-400">İdeal Set: 8-12 set/hafta. Bileşik hareketlerde zaten ikincil çalıştıkları unutulmamalıdır.</p>
+                            </div>
+
+                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white text-sm">Karın & Calf (Core / Baldır)</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">3 - 4 gün / hafta</span>
+                                </div>
+                                <p class="text-xs text-slate-400">Hızlı toparlandıkları için daha yüksek sıklıkla çalıştırılabilirler.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= PROGRESSIVE OVERLOAD TAB (DİNAMİK SON SEANS ANALİZİ VE ÖNERİ ASİSTANI) ================= -->
+            <section id="tab-overload" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Bilimsel Progressive Overload (Aşamalı Yüklenme) & Son Seans Analiz Asistanı</h2>
+                    <p class="text-slate-400 text-sm mt-1">Geçmiş antrenmanlarındaki hareketlerin **en son yapılan verileri** baz alınarak sonraki seans için özel olarak hesaplanan öneriler.</p>
+                </div>
+
+                <!-- DİNAMİK HAREKET BAZLI SON SEANS & PROGRESSIVE OVERLOAD ÖNERİLERİ -->
+                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 shadow-xl border-l-4 border-l-limeaccent">
+                    <div class="flex items-center gap-3 border-b border-bordercolor pb-3">
+                        <div class="p-2.5 bg-limeaccent/10 text-limeaccent rounded-xl">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-lg">Geçmiş Verilere Göre Sonraki Seans Hedef Asistanı</h3>
+                            <p class="text-xs text-slate-400">Geçmiş antrenmanlardaki son set verileriniz taranarak her hareket için özel sonraki seans yük ve tekrar tavsiyesi üretilmiştir.</p>
+                        </div>
+                    </div>
+
+                    <div id="dynamic-overload-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <!-- Javascript üzerinden dinamik olarak son antrenman verileriyle doldurulacak -->
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-3 shadow-xl">
+                        <div class="flex items-center gap-3 border-b border-bordercolor pb-3">
+                            <div class="p-2.5 bg-limeaccent/10 text-limeaccent rounded-xl">
+                                <i data-lucide="trending-up" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base">1. Çift Artış Kuralı (Double Progression)</h3>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Belirli bir tekrar aralığında (örn. 8-12 tekrar) çalışıyorsan, hedeflediğin üst sınıra (12 tekrar) ulaştığında ağırlığı artır.
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-bordercolor/50 text-xs text-slate-300 space-y-1">
+                            <p class="font-semibold text-limeaccent">Uygulama Adımları:</p>
+                            <p>• 1. Antrenman: 60 kg ile 3 set x 10 tekrar yap.</p>
+                            <p>• 2. Antrenman: Aynı ağırlıkla 3 set x 11 tekrar yap.</p>
+                            <p>• 3. Antrenman: Hedef olan 3 set x 12 tekrara ulaş.</p>
+                            <p>• 4. Antrenman: Ağırlığı artır (örn. 62.5 kg) ve tekrarı alt sınıra (8-10) düşür.</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-3 shadow-xl">
+                        <div class="flex items-center gap-3 border-b border-bordercolor pb-3">
+                            <div class="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl">
+                                <i data-lucide="activity" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-bold text-white text-base">2. RIR (Reps in Reserve - Yedek Tekrar) Takibi</h3>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Tükenişe (failure) her sette gitmek merkezi sinir sistemini (MSS) yorar. Bilimsel olarak setleri tükenişe 1-2 tekrar kala (1-2 RIR) bitirmek en verimli stratejidir.
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-bordercolor/50 text-xs text-slate-300 space-y-1">
+                            <p class="font-semibold text-blue-400">İlerleme Taktiği:</p>
+                            <p>• Bir önceki hafta aynı ağırlıkta 2 RIR kaldıysa, bu hafta aynı ağırlıkla 1 RIR veya 0 RIR (tükeniş) hedefle.</p>
+                            <p>• Form kalitesini bozmadan tükenişe yaklaşmak kas gelişimini tetikler.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= HISTORY TAB ================= -->
+            <section id="tab-history" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Antrenman Geçmişi</h2>
+                    <p class="text-slate-400 text-sm mt-1">Geçmişte tamamladığın tüm seansları incele, detaylarına göz at veya yönet.</p>
+                </div>
+                <div id="history-list" class="space-y-4"></div>
+            </section>
+
+            <!-- ================= STATS TAB ================= -->
+            <section id="tab-stats" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Hareket Bazlı Ağırlık İlerlemesi</h2>
+                    <p class="text-slate-400 text-sm mt-1">Kas grubunu seç, hareketin üzerine tıkla ve ağırlık gelişimini grafik üzerinde incele.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Exercise Selection Sidebar Panel -->
+                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 flex flex-col h-[600px] shadow-xl">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
+                            <i data-lucide="dumbbell" class="w-5 h-5 text-limeaccent"></i>
+                            Hareketler Listesi
+                        </h3>
+                        <div>
+                            <input type="text" id="stats-search-input" oninput="filterStatsExercises()" placeholder="Hareket ara..." class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                        </div>
+                        <div class="flex gap-1.5 overflow-x-auto pb-2 scrollbar-none" id="stats-category-tabs">
+                            <button onclick="filterStatsCategory('Tümü')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm">Tümü</button>
+                            <button onclick="filterStatsCategory('Göğüs')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Göğüs</button>
+                            <button onclick="filterStatsCategory('Sırt')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Sırt</button>
+                            <button onclick="filterStatsCategory('Omuz')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Omuz</button>
+                            <button onclick="filterStatsCategory('Bacak')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Bacak</button>
+                            <button onclick="filterStatsCategory('Kol')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Kol</button>
+                        </div>
+                        <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="stats-exercise-list"></div>
+                    </div>
+
+                    <!-- Chart Display Panel -->
+                    <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col h-[600px] shadow-xl">
+                        <div class="flex items-center justify-between pb-4 border-b border-bordercolor">
+                            <div>
+                                <h3 id="stats-chart-title" class="font-bold text-lg text-white">Hareket Seçilmedi</h3>
+                                <p id="stats-chart-subtitle" class="text-xs text-slate-400 mt-0.5">Sol menüden bir hareket seçerek gelişiminizi görün.</p>
+                            </div>
+                            <div id="stats-chart-badge" class="hidden px-3 py-1 rounded-lg text-xs font-semibold bg-limeaccent/10 text-limeaccent">Çizgi Grafiği</div>
+                        </div>
+                        <div class="flex-1 relative flex items-center justify-center mt-4">
+                            <canvas id="exerciseProgressChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= RECORDS TAB ================= -->
+            <section id="tab-records" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Kişisel Rekorlar (PR)</h2>
+                    <p class="text-slate-400 text-sm mt-1">Her hareket için kaydedilen en yüksek ağırlıklar ve tahmini 1RM değerleri.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="records-grid"></div>
+            </section>
+
+            <!-- ================= SETTINGS TAB ================= -->
+            <section id="tab-settings" class="tab-content hidden space-y-6 transition-all duration-300">
+                <div>
+                    <h2 class="text-2xl font-bold tracking-tight text-white">Ayarlar ve Veri Yönetimi</h2>
+                    <p class="text-slate-400 text-sm mt-1">Verilerini yedekle, dışa aktar, geri yükle veya tamamen sıfırla.</p>
+                </div>
+
+                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-6 max-w-2xl shadow-xl">
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                        <div>
+                            <h3 class="font-bold text-white">Verileri Dışa Aktar (JSON)</h3>
+                            <p class="text-xs text-slate-400 mt-1">Tüm antrenman geçmişini ve rekorlarını cihazına yedekle.</p>
+                        </div>
+                        <button onclick="exportData()" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 shadow-sm">
+                            <i data-lucide="download" class="w-4 h-4 text-limeaccent"></i>
+                            Dışa Aktar
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                        <div>
+                            <h3 class="font-bold text-white">Verileri İçe Aktar</h3>
+                            <p class="text-xs text-slate-400 mt-1">Daha önce dışa aktardığın JSON dosyasını yükle.</p>
+                        </div>
+                        <label class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 cursor-pointer shadow-sm">
+                            <i data-lucide="upload" class="w-4 h-4 text-limeaccent"></i>
+                            Dosya Seç
+                            <input type="file" id="import-file-input" accept=".json" onchange="importData(event)" class="hidden">
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                        <div>
+                            <h3 class="font-bold text-white">Demo Verileri Yükle</h3>
+                            <p class="text-xs text-slate-400 mt-1">Uygulamayı test etmek için örnek antrenman verileri ekle.</p>
+                        </div>
+                        <button onclick="loadDemoData()" class="bg-slate-800 hover:bg-slate-700 text-limeaccent font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 shadow-sm">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                            Demo Yükle
+                        </button>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-red-400">Tüm Verileri Sil</h3>
+                            <p class="text-xs text-slate-400 mt-1">Tüm antrenman geçmişin ve ayarların kalıcı olarak silinir.</p>
+                        </div>
+                        <button onclick="clearAllDataWithConfirmation()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-red-500/20 flex items-center gap-2 shadow-sm">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            Tümünü Sil
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ================= EXERCISE SELECTION & CUSTOM CREATION MODAL ================= -->
+    <div id="exercise-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-cardbg border border-bordercolor w-full max-w-lg rounded-2xl p-6 space-y-4 max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between border-b border-bordercolor pb-4">
+                <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                    <i data-lucide="dumbbell" class="w-5 h-5 text-limeaccent"></i>
+                    Hareket Seç veya Özel Ekle
+                </h3>
+                <button onclick="closeExerciseModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none" id="modal-category-tabs">
+                <button onclick="filterExerciseCategory('Tümü')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm">Tümü</button>
+                <button onclick="filterExerciseCategory('Göğüs')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Göğüs</button>
+                <button onclick="filterExerciseCategory('Sırt')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Sırt</button>
+                <button onclick="filterExerciseCategory('Omuz')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Omuz</button>
+                <button onclick="filterExerciseCategory('Bacak')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Bacak</button>
+                <button onclick="filterExerciseCategory('Kol')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Kol</button>
+            </div>
+
+            <!-- Custom Exercise Form with Category Dropdown -->
+            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-3">
+                <span class="text-xs font-bold text-limeaccent flex items-center gap-1.5">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Özel Hareket Tanımla
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <input type="text" id="custom-exercise-input" placeholder="Özel hareket adı..." class="bg-slate-950 border border-bordercolor rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-limeaccent transition-colors">
+                    <select id="custom-exercise-category" class="bg-slate-950 border border-bordercolor rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-limeaccent transition-colors">
+                        <option value="Göğüs">Göğüs</option>
+                        <option value="Sırt">Sırt</option>
+                        <option value="Omuz">Omuz</option>
+                        <option value="Bacak">Bacak</option>
+                        <option value="Kol">Kol</option>
+                        <option value="Diğer">Diğer</option>
+                    </select>
+                </div>
+                <button onclick="addCustomExerciseFromModal()" class="w-full bg-limeaccent hover:bg-limedark text-slate-950 font-bold py-2 rounded-xl text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Kalıcı Olarak Havuza ve Listeye Ekle
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto space-y-2 max-h-[240px]" id="modal-exercise-list"></div>
+        </div>
+    </div>
+
+    <!-- ================= WORKOUT DETAIL MODAL ================= -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-cardbg border border-bordercolor w-full max-w-xl rounded-2xl p-6 space-y-4 max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between border-b border-bordercolor pb-4">
+                <div>
+                    <h3 id="detail-modal-title" class="font-bold text-lg text-white">Antrenman Detayı</h3>
+                    <p id="detail-modal-subtitle" class="text-xs text-slate-400 mt-0.5">Tarih</p>
+                </div>
+                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto space-y-4" id="detail-modal-content"></div>
+
+            <div class="border-t border-bordercolor pt-4 flex justify-between items-center">
+                <button id="detail-delete-btn" onclick="" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold px-4 py-2 rounded-xl transition-colors border border-red-500/20 flex items-center gap-2 shadow-sm">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    Antrenmanı Sil
+                </button>
+                <div class="flex items-center gap-2">
+                    <button id="detail-edit-btn" onclick="" class="bg-limeaccent hover:bg-limedark text-slate-950 text-xs font-bold px-4 py-2 rounded-xl transition-colors flex items-center gap-2 shadow-sm">
+                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                        Antrenmanı Düzenle
+                    </button>
+                    <button onclick="closeDetailModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors shadow-sm">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Core Script -->
+    <script>
+        let EXERCISE_LIBRARY = [
+            { name: "Bench Press", category: "Göğüs" },
+            { name: "Incline Bench Press", category: "Göğüs" },
+            { name: "Dumbbell Bench Press", category: "Göğüs" },
+            { name: "Incline Dumbbell Press", category: "Göğüs" },
+            { name: "Chest Fly", category: "Göğüs" },
+            { name: "Deadlift", category: "Sırt" },
+            { name: "Barbell Row", category: "Sırt" },
+            { name: "Lat Pulldown", category: "Sırt" },
+            { name: "Pull Up", category: "Sırt" },
+            { name: "Seated Cable Row", category: "Sırt" },
+            { name: "Overhead Press", category: "Omuz" },
+            { name: "Dumbbell Shoulder Press", category: "Omuz" },
+            { name: "Lateral Raise", category: "Omuz" },
+            { name: "Front Raise", category: "Omuz" },
+            { name: "Rear Delt Fly", category: "Omuz" },
+            { name: "Squat", category: "Bacak" },
+            { name: "Front Squat", category: "Bacak" },
+            { name: "Leg Press", category: "Bacak" },
+            { name: "Romanian Deadlift", category: "Bacak" },
+            { name: "Leg Curl", category: "Bacak" },
+            { name: "Leg Extension", category: "Bacak" },
+            { name: "Calf Raise", category: "Bacak" },
+            { name: "Barbell Curl", category: "Kol" },
+            { name: "Dumbbell Curl", category: "Kol" },
+            { name: "Hammer Curl", category: "Kol" },
+            { name: "Triceps Pushdown", category: "Kol" },
+            { name: "Skull Crusher", category: "Kol" },
+            { name: "Overhead Triceps Extension", category: "Kol" }
+        ];
+
+        let state = {
+            workouts: [],
+            profile: {
+                name: 'Sporcu Profilim',
+                age: 30,
+                gender: 'Erkek',
+                weight: 70,
+                height: 170,
+                level: 'Orta Seviye'
+            },
+            activeWorkout: {
+                id: null,
+                date: new Date().toISOString().split('T')[0],
+                type: 'Push',
+                name: 'Push A',
+                exercises: []
+            },
+            currentWeekOffset: 0,
+            selectedModalCategory: 'Tümü',
+            statsSelectedCategory: 'Tümü',
+            selectedExerciseForStats: null
+        };
+
+        let weeklyChartInstance = null;
+        let exerciseProgressChartInstance = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFromLocalStorage();
+            lucide.createIcons();
+            setupEventListeners();
+            switchTab('dashboard');
+            renderDashboard();
+            loadProfileToUI();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('open-sidebar').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.remove('-translate-x-full');
+                document.getElementById('sidebar-backdrop').classList.remove('hidden');
+            });
+            document.getElementById('close-sidebar').addEventListener('click', closeSidebar);
+            document.getElementById('sidebar-backdrop').addEventListener('click', closeSidebar);
+
+            document.getElementById('workout-date').addEventListener('change', (e) => {
+                state.activeWorkout.date = e.target.value;
+            });
+            document.getElementById('workout-type').addEventListener('change', (e) => {
+                state.activeWorkout.type = e.target.value;
+            });
+            document.getElementById('workout-name').addEventListener('input', (e) => {
+                state.activeWorkout.name = e.target.value;
+            });
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+            document.getElementById('sidebar-backdrop').classList.add('hidden');
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('fit_workouts', JSON.stringify(state.workouts));
+            localStorage.setItem('fit_profile', JSON.stringify(state.profile));
+            localStorage.setItem('fit_exercise_library', JSON.stringify(EXERCISE_LIBRARY));
+        }
+
+        function loadFromLocalStorage() {
+            const data = localStorage.getItem('fit_workouts');
+            if (data) {
+                try { state.workouts = JSON.parse(data); } catch (e) { state.workouts = []; }
+            }
+            const profData = localStorage.getItem('fit_profile');
+            if (profData) {
+                try { state.profile = JSON.parse(profData); } catch (e) {}
+            }
+            const libData = localStorage.getItem('fit_exercise_library');
+            if (libData) {
+                try { EXERCISE_LIBRARY = JSON.parse(libData); } catch (e) {}
+            }
+        }
+
+        function loadProfileToUI() {
+            document.getElementById('profile-input-name').value = state.profile.name || 'Sporcu Profilim';
+            document.getElementById('profile-input-age').value = state.profile.age || 30;
+            document.getElementById('profile-input-gender').value = state.profile.gender || 'Erkek';
+            document.getElementById('profile-input-weight').value = state.profile.weight || 70;
+            document.getElementById('profile-input-height').value = state.profile.height || 170;
+            document.getElementById('profile-input-level').value = state.profile.level || 'Orta Seviye';
+
+            document.getElementById('sidebar-profile-name').textContent = state.profile.name || 'Sporcu Profilim';
+            document.getElementById('sidebar-profile-sub').textContent = `${state.profile.age} Yaş • ${state.profile.weight} kg • ${state.profile.height} cm`;
+        }
+
+        function saveUserProfile() {
+            state.profile = {
+                name: document.getElementById('profile-input-name').value.trim() || 'Sporcu',
+                age: parseInt(document.getElementById('profile-input-age').value) || 30,
+                gender: document.getElementById('profile-input-gender').value,
+                weight: parseFloat(document.getElementById('profile-input-weight').value) || 70,
+                height: parseInt(document.getElementById('profile-input-height').value) || 170,
+                level: document.getElementById('profile-input-level').value
+            };
+            saveToLocalStorage();
+            loadProfileToUI();
+            showToast('Kişisel bilgiler başarıyla güncellendi.');
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-limeaccent', 'text-slate-950', 'shadow-lg', 'shadow-limeaccent/10');
+                btn.classList.add('text-slate-300', 'hover:bg-slate-800/80', 'hover:text-white');
+                if (btn.getAttribute('data-target') === tabId) {
+                    btn.classList.add('bg-limeaccent', 'text-slate-950', 'shadow-lg', 'shadow-limeaccent/10');
+                    btn.classList.remove('text-slate-300', 'hover:bg-slate-800/80', 'hover:text-white');
+                }
+            });
+
+            closeSidebar();
+
+            if (tabId === 'dashboard') renderDashboard();
+            else if (tabId === 'history') renderHistory();
+            else if (tabId === 'stats') renderStats();
+            else if (tabId === 'records') renderRecords();
+            else if (tabId === 'overload') renderDynamicOverloadAssistant();
+            else if (tabId === 'workout') {
+                if (!state.activeWorkout.id || !state.workouts.some(w => w.id === state.activeWorkout.id && state.activeWorkout.isEditing)) {
+                    if (!state.activeWorkout.isEditing) {
+                        document.getElementById('workout-section-title').textContent = 'Antrenman Yönetimi';
+                        document.getElementById('workout-section-subtitle').textContent = 'Yeni bir seans başlat, hareketleri ve setleri anlık olarak takip et.';
+                        document.getElementById('complete-workout-btn-text').textContent = 'Antrenmanı Tamamla';
+                    }
+                }
+                renderActiveWorkoutForm();
+            }
+            else if (tabId === 'profile') loadProfileToUI();
+        }
+
+        // --- DİNAMİK SON SEANS & PROGRESSIVE OVERLOAD HESAPLAMA ASİSTANI ---
+        function renderDynamicOverloadAssistant() {
+            const container = document.getElementById('dynamic-overload-container');
+            if (!state.workouts || state.workouts.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8 bg-slate-900/40 border border-dashed border-bordercolor rounded-xl">
+                        <p class="text-slate-400 text-sm">Henüz kaydedilmiş geçmiş antrenman bulunmuyor.</p>
+                        <p class="text-slate-500 text-xs mt-1">Antrenman yaptıkça hareketlerinizin son verilerine göre özel progresive overload önerileri burada listelenecektir.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Her hareketin en son yapıldığı seanstaki verisini bulalım
+            const latestExerciseData = {};
+            // state.workouts eskiden yeniye veya yeniden eskiye olabilir, tarihe göre sıralayarak en son veriyi bulalım
+            const sortedWorkouts = [...state.workouts].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            sortedWorkouts.forEach(workout => {
+                workout.exercises.forEach(ex => {
+                    latestExerciseData[ex.name] = {
+                        date: workout.date,
+                        workoutName: workout.name,
+                        sets: ex.sets
+                    };
+                });
+            });
+
+            let html = '';
+            for (const [exName, data] of Object.entries(latestExerciseData)) {
+                // Son set verisini baz alalım
+                const lastSet = data.sets[data.sets.length - 1] || { weight: 0, reps: 0 };
+                const weight = Number(lastSet.weight) || 0;
+                const reps = Number(lastSet.reps) || 0;
+
+                // Öneri mantığı (Double Progression):
+                // Eğer tekrar >= 12 ise ağırlığı artır (%2.5 - 5 veya min kademe), tekrarı 8-10 aralığına çek.
+                // Eğer tekrar < 12 ise ağırlığı sabit tut, tekrarı 1-2 artır.
+                let recommendationTitle = '';
+                let recommendationDesc = '';
+
+                if (reps >= 12) {
+                    const suggestedWeight = weight > 0 ? (weight + (weight >= 40 ? 2.5 : 1.25)).toFixed(1) : '2.5 kg';
+                    recommendationTitle = `Ağırlık Artışı Önerilir (+Ağırlık)`;
+                    recommendationDesc = `Son seansında (${data.date} - ${data.workoutName}) ${weight} kg ile ${reps} tekrar tamamladın. Hedef tekrar aralığı aşıldığı için sonraki seans ağırlığı <strong class="text-limeaccent">${suggestedWeight} kg</strong> seviyesine çıkarıp tekrarı 8-10 aralığına düşürebilirsin.`;
+                } else {
+                    const suggestedReps = reps + 1;
+                    recommendationTitle = `Tekrar Artışı Önerilir (Sabit Ağırlık)`;
+                    recommendationDesc = `Son seansında (${data.date} - ${data.workoutName}) ${weight} kg ile ${reps} tekrar yaptın. Ağırlığı sabit tutup sonraki seans bu harekette <strong class="text-limeaccent">${suggestedReps} veya daha fazla tekrar</strong> hedeflemelisin (0-1 RIR).`;
+                }
+
+                html += `
+                    <div class="bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-white text-sm flex items-center gap-1.5"><i data-lucide="dumbbell" class="w-4 h-4 text-limeaccent"></i> ${exName}</span>
+                            <span class="text-[10px] bg-limeaccent/10 text-limeaccent font-bold px-2 py-0.5 rounded">Son: ${weight}kg x ${reps}tekrar</span>
+                        </div>
+                        <p class="text-xs font-semibold text-slate-200">${recommendationTitle}</p>
+                        <p class="text-xs text-slate-400">${recommendationDesc}</p>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-4 py-3 rounded-xl text-sm font-medium shadow-xl flex items-center gap-3 border transition-all transform translate-y-2 opacity-0 pointer-events-auto ${
+                type === 'success' ? 'bg-slate-900 border-limeaccent/50 text-white' : 'bg-slate-900 border-red-500/50 text-white'
+            }`;
+            toast.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5 ${type === 'success' ? 'text-limeaccent' : 'text-red-400'}"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function initNewWorkout() {
+            state.activeWorkout = {
+                id: 'w_' + Date.now(),
+                date: new Date().toISOString().split('T')[0],
+                type: 'Push',
+                name: 'Push A',
+                exercises: [],
+                isEditing: false
+            };
+            document.getElementById('workout-section-title').textContent = 'Antrenman Yönetimi';
+            document.getElementById('workout-section-subtitle').textContent = 'Yeni bir seans başlat, hareketleri ve setleri anlık olarak takip et.';
+            document.getElementById('complete-workout-btn-text').textContent = 'Antrenmanı Tamamla';
+            renderActiveWorkoutForm();
+        }
+
+        function renderActiveWorkoutForm() {
+            document.getElementById('workout-date').value = state.activeWorkout.date;
+            document.getElementById('workout-type').value = state.activeWorkout.type;
+            document.getElementById('workout-name').value = state.activeWorkout.name;
+
+            const container = document.getElementById('active-exercises-list');
+            if (state.activeWorkout.exercises.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 bg-slate-900/40 border border-dashed border-bordercolor rounded-2xl">
+                        <p class="text-slate-400 text-sm">Henüz hareket eklenmedi.</p>
+                        <p class="text-slate-500 text-xs mt-1">"+ Hareket Ekle" butonuna basarak antrenmana hareket ekleyin.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = state.activeWorkout.exercises.map((ex, exIndex) => `
+                    <div class="bg-slate-900 border border-bordercolor rounded-2xl p-4 space-y-4 shadow-md">
+                        <div class="flex items-center justify-between border-b border-bordercolor pb-3">
+                            <h4 class="font-bold text-white flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-slate-800 text-limeaccent text-xs flex items-center justify-center font-bold">${exIndex + 1}</span>
+                                ${ex.name}
+                            </h4>
+                            <div class="flex items-center gap-2">
+                                <button onclick="addSet(${exIndex})" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors shadow-sm">
+                                    <i data-lucide="plus" class="w-3.5 h-3.5 text-limeaccent"></i> Set Ekle
+                                </button>
+                                <button onclick="removeExercise(${exIndex})" class="text-slate-400 hover:text-red-400 p-1.5 transition-colors">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-12 gap-2 text-xs font-semibold text-slate-400 px-1">
+                                <div class="col-span-2 sm:col-span-1">Set</div>
+                                <div class="col-span-4 sm:col-span-4">Ağırlık (kg)</div>
+                                <div class="col-span-4 sm:col-span-5">Tekrar</div>
+                                <div class="col-span-2 sm:col-span-2 text-right">Sil</div>
+                            </div>
+                            ${ex.sets.map((set, setIndex) => `
+                                <div class="grid grid-cols-12 gap-2 items-center bg-slate-950/40 p-2 rounded-xl border border-bordercolor/50">
+                                    <div class="col-span-2 sm:col-span-1 pl-2 font-bold text-sm text-limeaccent">#${setIndex + 1}</div>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <input type="number" min="0" step="0.5" value="${set.weight}" onchange="updateSet(${exIndex},${setIndex}, 'weight', this.value)" class="w-full bg-slate-900 border border-bordercolor rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-5">
+                                        <input type="number" min="1" value="${set.reps}" onchange="updateSet(${exIndex},${setIndex}, 'reps', this.value)" class="w-full bg-slate-900 border border-bordercolor rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                    </div>
+                                    <div class="col-span-2 sm:col-span-2 text-right pr-1">
+                                        <button onclick="removeSet(${exIndex},${setIndex})" class="text-slate-400 hover:text-red-400 p-1 transition-colors">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateActiveWorkoutTotals();
+            lucide.createIcons();
+        }
+
+        function openExerciseModal() {
+            renderExerciseLibraryList();
+            document.getElementById('exercise-modal').classList.remove('hidden');
+        }
+
+        function closeExerciseModal() {
+            document.getElementById('exercise-modal').classList.add('hidden');
+            document.getElementById('custom-exercise-input').value = '';
+        }
+
+        function filterExerciseCategory(category) {
+            state.selectedModalCategory = category;
+            document.querySelectorAll('.cat-tab').forEach(btn => {
+                btn.classList.remove('bg-limeaccent', 'text-slate-950');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+                if (btn.textContent.trim() === category || (category === 'Tümü' && btn.textContent.trim() === 'Tümü')) {
+                    btn.classList.add('bg-limeaccent', 'text-slate-950');
+                    btn.classList.remove('bg-slate-800', 'text-slate-300');
+                }
+            });
+            renderExerciseLibraryList();
+        }
+
+        function renderExerciseLibraryList() {
+            const listContainer = document.getElementById('modal-exercise-list');
+            const filtered = state.selectedModalCategory === 'Tümü' ? EXERCISE_LIBRARY : EXERCISE_LIBRARY.filter(e => e.category === state.selectedModalCategory);
+
+            listContainer.innerHTML = filtered.map(ex => `
+                <div onclick="addExerciseToActive('${ex.name}')" class="flex items-center justify-between p-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-bordercolor cursor-pointer transition-all group shadow-sm">
+                    <span class="font-medium text-sm text-white group-hover:text-limeaccent transition-colors">${ex.name}</span>
+                    <span class="text-xs text-slate-400 bg-slate-950 px-2 py-1 rounded-lg">${ex.category}</span>
+                </div>
+            `).join('');
+        }
+
+        function addExerciseToActive(name) {
+            state.activeWorkout.exercises.push({
+                name: name,
+                sets: [
+                    { weight: 0, reps: 10 },
+                    { weight: 0, reps: 10 },
+                    { weight: 0, reps: 10 }
+                ]
+            });
+            closeExerciseModal();
+            renderActiveWorkoutForm();
+            showToast(`${name} hareketi eklendi.`);
+        }
+
+        function addCustomExerciseFromModal() {
+            const input = document.getElementById('custom-exercise-input');
+            const catSelect = document.getElementById('custom-exercise-category');
+            const name = input.value.trim();
+            const category = catSelect.value;
+
+            if (!name) {
+                showToast('Lütfen geçerli bir hareket adı girin.', 'error');
+                return;
+            }
+
+            const exists = EXERCISE_LIBRARY.some(e => e.name.toLowerCase() === name.toLowerCase());
+            if (!exists) {
+                EXERCISE_LIBRARY.push({ name, category });
+                saveToLocalStorage();
+            }
+
+            state.activeWorkout.exercises.push({
+                name: name,
+                sets: [{ weight: 0, reps: 10 }]
+            });
+            closeExerciseModal();
+            renderActiveWorkoutForm();
+            showToast(`${name} (${category}) kalıcı olarak havuza ve antrenmana eklendi.`);
+        }
+
+        function removeExercise(exIndex) {
+            state.activeWorkout.exercises.splice(exIndex, 1);
+            renderActiveWorkoutForm();
+        }
+
+        function addSet(exIndex) {
+            const lastSet = state.activeWorkout.exercises[exIndex].sets;
+            const lastWeight = lastSet.length > 0 ? Number(lastSet[lastSet.length - 1].weight) || 0 : 0;
+            const lastReps = lastSet.length > 0 ? Number(lastSet[lastSet.length - 1].reps) || 10 : 10;
+            
+            state.activeWorkout.exercises[exIndex].sets.push({ weight: lastWeight, reps: lastReps });
+            renderActiveWorkoutForm();
+        }
+
+        function removeSet(exIndex, setIndex) {
+            state.activeWorkout.exercises[exIndex].sets.splice(setIndex, 1);
+            renderActiveWorkoutForm();
+        }
+
+        function updateSet(exIndex, setIndex, field, value) {
+            const val = parseFloat(value) || 0;
+            state.activeWorkout.exercises[exIndex].sets[setIndex][field] = val;
+            updateActiveWorkoutTotals();
+        }
+
+        function updateActiveWorkoutTotals() {
+            let totalVolume = 0, totalSets = 0, totalReps = 0;
+            state.activeWorkout.exercises.forEach(ex => {
+                ex.sets.forEach(set => {
+                    const w = Number(set.weight) || 0;
+                    const r = Number(set.reps) || 0;
+                    totalVolume += (w * r);
+                    totalSets += 1;
+                    totalReps += r;
+                });
+            });
+
+            document.getElementById('active-total-volume').textContent = formatNumber(totalVolume) + ' kg';
+            document.getElementById('active-total-sets').textContent = totalSets;
+            document.getElementById('active-total-reps').textContent = totalReps;
+        }
+
+        function cancelWorkout() {
+            if (confirm('Antrenmanı iptal etmek istediğinize emin misiniz?')) {
+                initNewWorkout();
+                switchTab('dashboard');
+                showToast('Antrenman iptal edildi.', 'error');
+            }
+        }
+
+        function completeActiveWorkout() {
+            if (state.activeWorkout.exercises.length === 0) {
+                showToast('Antrenmana en az bir hareket ekleyin.', 'error');
+                return;
+            }
+
+            let isValid = true;
+            state.activeWorkout.exercises.forEach(ex => {
+                if (ex.sets.length === 0) isValid = false;
+                ex.sets.forEach(set => {
+                    if (Number(set.weight) < 0 || Number(set.reps) <= 0) isValid = false;
+                });
+            });
+
+            if (!isValid) {
+                showToast('Ağırlık negatif olamaz ve tekrar 0\'dan büyük olmalıdır.', 'error');
+                return;
+            }
+
+            let totalVolume = 0, totalSets = 0, totalReps = 0;
+            state.activeWorkout.exercises.forEach(ex => {
+                ex.sets.forEach(set => {
+                    const w = Number(set.weight) || 0;
+                    const r = Number(set.reps) || 0;
+                    totalVolume += (w * r);
+                    totalSets += 1;
+                    totalReps += r;
+                });
+            });
+
+            const completedWorkout = {
+                ...state.activeWorkout,
+                completed: true,
+                totalVolume,
+                totalSets,
+                totalReps
+            };
+            delete completedWorkout.isEditing;
+
+            const existingIndex = state.workouts.findIndex(w => w.id === completedWorkout.id);
+            if (existingIndex >= 0) {
+                state.workouts[existingIndex] = completedWorkout;
+            } else {
+                state.workouts.unshift(completedWorkout);
+            }
+
+            saveToLocalStorage();
+            initNewWorkout();
+            switchTab('dashboard');
+            showToast('Antrenman başarıyla kaydedildi!');
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('tr-TR');
+        }
+
+        function renderDashboard() {
+            const workouts = state.workouts;
+            document.getElementById('dash-workouts-count').textContent = workouts.length;
+
+            let totalVol = 0, totalSets = 0, totalReps = 0;
+            workouts.forEach(w => {
+                totalVol += (w.totalVolume || 0);
+                totalSets += (w.totalSets || 0);
+                totalReps += (w.totalReps || 0);
+            });
+
+            document.getElementById('dash-weekly-volume').textContent = formatNumber(totalVol) + ' kg';
+            document.getElementById('dash-weekly-sets').textContent = totalSets;
+            document.getElementById('dash-weekly-reps').textContent = totalReps;
+
+            document.getElementById('review-count').textContent = workouts.length;
+            document.getElementById('review-volume').textContent = formatNumber(totalVol) + ' kg';
+            document.getElementById('review-sets-reps').textContent = `${totalSets} / ${totalReps}`;
+
+            if (workouts.length > 0) {
+                const best = [...workouts].sort((a,b) => (b.totalVolume || 0) - (a.totalVolume || 0))[0];
+                document.getElementById('review-best-session').textContent = `${best.name} (${formatNumber(best.totalVolume)} kg)`;
+            } else {
+                document.getElementById('review-best-session').textContent = '-';
+            }
+
+            const recentList = document.getElementById('dashboard-recent-list');
+            if (workouts.length === 0) {
+                recentList.innerHTML = `<p class="text-slate-400 text-xs py-4 text-center">Henüz antrenman kaydedilmedi.</p>`;
+            } else {
+                recentList.innerHTML = workouts.slice(0, 3).map(w => `
+                    <div onclick="openDetailModal('${w.id}')" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-bordercolor cursor-pointer transition-all shadow-sm">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${w.name} <span class="text-xs font-normal text-slate-400">(${w.type})</span></h4>
+                            <p class="text-xs text-slate-400 mt-0.5">${w.date} • ${w.exercises.length} Hareket</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-extrabold text-limeaccent text-sm">${formatNumber(w.totalVolume)} kg</span>
+                            <span class="text-xs text-slate-400 block">${w.totalSets} Set</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            renderWeeklyChart();
+            lucide.createIcons();
+        }
+
+        function renderWeeklyChart() {
+            const ctx = document.getElementById('weeklyVolumeChart').getContext('2d');
+            if (weeklyChartInstance) weeklyChartInstance.destroy();
+
+            const labels = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+            const dataVals = [0, 0, 0, 0, 0, 0, 0];
+
+            state.workouts.forEach(w => {
+                const d = new Date(w.date);
+                let day = d.getDay(); // 0 is Sunday
+                let index = day === 0 ? 6 : day - 1;
+                dataVals[index] += (w.totalVolume || 0);
+            });
+
+            weeklyChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Günlük Tonaj (kg)',
+                        data: dataVals,
+                        backgroundColor: '#84cc16',
+                        borderRadius: 8,
+                        hoverBackgroundColor: '#65a30d'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('history-list');
+            if (state.workouts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 bg-cardbg border border-bordercolor rounded-2xl shadow-xl">
+                        <p class="text-slate-400 text-sm">Geçmiş antrenman kaydı bulunmuyor.</p>
+                        <button onclick="switchTab('workout'); initNewWorkout();" class="mt-4 bg-limeaccent text-slate-950 px-4 py-2 rounded-xl text-xs font-semibold shadow-lg">İlk Antrenmanını Ekle</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = state.workouts.map(w => `
+                <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg hover:border-bordercolor/80 transition-all">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-white text-base">${w.name}</h3>
+                            <span class="text-[10px] bg-limeaccent/10 text-limeaccent font-bold px-2 py-0.5 rounded">${w.type}</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">${w.date} • ${w.exercises.length} Hareket • ${w.totalSets} Set • ${w.totalReps} Tekrar</p>
+                    </div>
+                    <div class="flex items-center justify-between md:justify-end gap-6">
+                        <div class="text-left md:text-right">
+                            <span class="text-xs text-slate-400 block">Toplam Tonaj</span>
+                            <span class="font-extrabold text-limeaccent text-lg">${formatNumber(w.totalVolume)} kg</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openDetailModal('${w.id}')" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors border border-bordercolor shadow-sm">Detay</button>
+                            <button onclick="deleteWorkout('${w.id}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 p-2 rounded-xl transition-colors border border-red-500/20">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function openDetailModal(id) {
+            const w = state.workouts.find(item => item.id === id);
+            if (!w) return;
+
+            document.getElementById('detail-modal-title').textContent = w.name;
+            document.getElementById('detail-modal-subtitle').textContent = `${w.date} • ${w.type} Antrenmanı`;
+
+            const content = document.getElementById('detail-modal-content');
+            content.innerHTML = w.exercises.map((ex, i) => `
+                <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-2">
+                    <h4 class="font-bold text-white text-sm flex items-center gap-2">
+                        <span class="w-5 h-5 rounded bg-slate-800 text-limeaccent text-xs flex items-center justify-center font-bold">${i + 1}</span>
+                        ${ex.name}
+                    </h4>
+                    <div class="space-y-1">
+                        ${ex.sets.map((set, sIdx) => `
+                            <div class="flex items-center justify-between text-xs bg-slate-950/50 px-3 py-1.5 rounded-lg border border-bordercolor/40">
+                                <span class="font-semibold text-slate-400">Set #${sIdx + 1}</span>
+                                <span class="text-white font-medium">${set.weight} kg × ${set.reps} tekrar</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('detail-delete-btn').setAttribute('onclick', `deleteWorkout('${w.id}'); closeDetailModal();`);
+            document.getElementById('detail-edit-btn').setAttribute('onclick', `editWorkout('${w.id}'); closeDetailModal();`);
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        function deleteWorkout(id) {
+            if (confirm('Bu antrenmanı silmek istediğinize emin misiniz?')) {
+                state.workouts = state.workouts.filter(w => w.id !== id);
+                saveToLocalStorage();
+                renderDashboard();
+                renderHistory();
+                showToast('Antrenman silindi.', 'error');
+            }
+        }
+
+        function editWorkout(id) {
+            const w = state.workouts.find(item => item.id === id);
+            if (!w) return;
+
+            state.activeWorkout = JSON.parse(JSON.stringify(w));
+            state.activeWorkout.isEditing = true;
+
+            document.getElementById('workout-section-title').textContent = 'Antrenmanı Düzenle';
+            document.getElementById('workout-section-subtitle').textContent = `${w.name} seansını düzenliyorsunuz.`;
+            document.getElementById('complete-workout-btn-text').textContent = 'Değişiklikleri Kaydet';
+
+            switchTab('workout');
+        }
+
+        function renderStats() {
+            const listContainer = document.getElementById('stats-exercise-list');
+            const uniqueExercises = [...new Set(EXERCISE_LIBRARY.map(e => e.name))];
+            
+            // Mevcut antrenmanlarda geçen ek hareketleri de ekleyelim
+            state.workouts.forEach(w => {
+                w.exercises.forEach(ex => {
+                    if (!uniqueExercises.includes(ex.name)) uniqueExercises.push(ex.name);
+                });
+            });
+
+            const searchQuery = document.getElementById('stats-search-input').value.toLowerCase();
+            let filtered = uniqueExercises.filter(name => name.toLowerCase().includes(searchQuery));
+
+            if (state.statsSelectedCategory !== 'Tümü') {
+                const libMatch = EXERCISE_LIBRARY.filter(e => e.category === state.statsSelectedCategory).map(e => e.name);
+                filtered = filtered.filter(name => libMatch.includes(name));
+            }
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `<p class="text-slate-400 text-xs py-4 text-center">Hareket bulunamadı.</p>`;
+                return;
+            }
+
+            listContainer.innerHTML = filtered.map(name => `
+                <div onclick="selectExerciseForStats('${name}')" class="flex items-center justify-between p-3 rounded-xl bg-slate-900 hover:bg-slate-800 border ${state.selectedExerciseForStats === name ? 'border-limeaccent bg-slate-800/80' : 'border-bordercolor'} cursor-pointer transition-all shadow-sm">
+                    <span class="font-medium text-sm text-white">${name}</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function filterStatsCategory(cat) {
+            state.statsSelectedCategory = cat;
+            document.querySelectorAll('.stats-cat-tab').forEach(btn => {
+                btn.classList.remove('bg-limeaccent', 'text-slate-950');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+                if (btn.textContent.trim() === cat || (cat === 'Tümü' && btn.textContent.trim() === 'Tümü')) {
+                    btn.classList.add('bg-limeaccent', 'text-slate-950');
+                    btn.classList.remove('bg-slate-800', 'text-slate-300');
+                }
+            });
+            renderStats();
+        }
+
+        function filterStatsExercises() {
+            renderStats();
+        }
+
+        function selectExerciseForStats(exerciseName) {
+            state.selectedExerciseForStats = exerciseName;
+            renderStats();
+            renderExerciseProgressChart(exerciseName);
+        }
+
+        function renderExerciseProgressChart(exerciseName) {
+            document.getElementById('stats-chart-title').textContent = exerciseName;
+            document.getElementById('stats-chart-subtitle').textContent = 'Zamana bağlı maksimum ağırlık gelişimi (kg)';
+            document.getElementById('stats-chart-badge').classList.remove('hidden');
+
+            const dates = [];
+            const maxWeights = [];
+
+            // Tarihe göre sıralı seanslar
+            const sorted = [...state.workouts].sort((a,b) => new Date(a.date) - new Date(b.date));
+
+            sorted.forEach(w => {
+                w.exercises.forEach(ex => {
+                    if (ex.name === exerciseName) {
+                        let maxW = 0;
+                        ex.sets.forEach(set => {
+                            if (Number(set.weight) > maxW) maxW = Number(set.weight);
+                        });
+                        dates.push(w.date);
+                        maxWeights.push(maxW);
+                    }
+                });
+            });
+
+            const ctx = document.getElementById('exerciseProgressChart').getContext('2d');
+            if (exerciseProgressChartInstance) exerciseProgressChartInstance.destroy();
+
+            exerciseProgressChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: `${exerciseName} Max Ağırlık (kg)`,
+                        data: maxWeights,
+                        borderColor: '#84cc16',
+                        backgroundColor: 'rgba(132, 204, 22, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.2,
+                        pointBackgroundColor: '#84cc16',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        function renderRecords() {
+            const container = document.getElementById('records-grid');
+            const prMap = {};
+
+            state.workouts.forEach(w => {
+                w.exercises.forEach(ex => {
+                    ex.sets.forEach(set => {
+                        const wgt = Number(set.weight) || 0;
+                        const reps = Number(set.reps) || 0;
+                        // 1RM tahmini Epley formülü: weight * (1 + reps/30)
+                        const est1RM = reps > 0 ? wgt * (1 + reps / 30) : wgt;
+
+                        if (!prMap[ex.name] || wgt > prMap[ex.name].maxWeight) {
+                            prMap[ex.name] = {
+                                maxWeight: wgt,
+                                reps: reps,
+                                date: w.date,
+                                est1RM: Math.round(est1RM)
+                            };
+                        }
+                    });
+                });
+            });
+
+            const keys = Object.keys(prMap);
+            if (keys.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-cardbg border border-bordercolor rounded-2xl shadow-xl">
+                        <p class="text-slate-400 text-sm">Henüz kişisel rekor kaydı bulunmuyor.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = keys.map(exName => {
+                const pr = prMap[exName];
+                return `
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl space-y-3 shadow-lg hover:border-bordercolor/80 transition-all">
+                        <div class="flex items-center justify-between border-b border-bordercolor pb-3">
+                            <h4 class="font-bold text-white text-base flex items-center gap-2">
+                                <i data-lucide="trophy" class="w-4 h-4 text-limeaccent"></i>
+                                ${exName}
+                            </h4>
+                            <span class="text-[10px] bg-limeaccent/10 text-limeaccent font-bold px-2 py-0.5 rounded">PR</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">En Yüksek Ağırlık:</span>
+                                <span class="font-extrabold text-white">${pr.maxWeight} kg (${pr.reps} tekrar)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Tahmini 1RM:</span>
+                                <span class="font-extrabold text-limeaccent">${pr.est1RM} kg</span>
+                            </div>
+                            <div class="flex justify-between text-xs pt-1 border-t border-bordercolor/40 text-slate-500">
+                                <span>Tarih:</span>
+                                <span>${pr.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function exportData() {
+            const data = {
+                workouts: state.workouts,
+                profile: state.profile,
+                exerciseLibrary: EXERCISE_LIBRARY
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `fit_gunluk_yedek_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            showToast('Veriler başarıyla dışa aktarıldı.');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.workouts) state.workouts = parsed.workouts;
+                    if (parsed.profile) state.profile = parsed.profile;
+                    if (parsed.exerciseLibrary) EXERCISE_LIBRARY = parsed.exerciseLibrary;
+
+                    saveToLocalStorage();
+                    loadProfileToUI();
+                    renderDashboard();
+                    showToast('Veriler başarıyla içe aktarıldı!');
+                } catch (err) {
+                    showToast('Geçersiz dosya formatı.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function loadDemoData() {
+            state.workouts = [
+                {
+                    id: 'demo_1',
+                    date: '2026-08-01',
+                    type: 'Push',
+                    name: 'Push A',
+                    exercises: [
+                        { name: 'Bench Press', sets: [{ weight: 60, reps: 10 }, { weight: 60, reps: 10 }, { weight: 60, reps: 9 }] },
+                        { name: 'Lateral Raise', sets: [{ weight: 10, reps: 15 }, { weight: 10, reps: 15 }, { weight: 10, reps: 12 }] }
+                    ],
+                    completed: true,
+                    totalVolume: 2430,
+                    totalSets: 6,
+                    totalReps: 63
+                },
+                {
+                    id: 'demo_2',
+                    date: '2026-08-03',
+                    type: 'Pull',
+                    name: 'Pull A',
+                    exercises: [
+                        { name: 'Lat Pulldown', sets: [{ weight: 50, reps: 12 }, { weight: 50, reps: 12 }, { weight: 55, reps: 10 }] },
+                        { name: 'Barbell Row', sets: [{ weight: 50, reps: 10 }, { weight: 50, reps: 10 }, { weight: 50, reps: 8 }] }
+                    ],
+                    completed: true,
+                    totalVolume: 3100,
+                    totalSets: 6,
+                    totalReps: 62
+                }
+            ];
+            saveToLocalStorage();
+            renderDashboard();
+            showToast('Demo verileri yüklendi.');
+        }
+
+        function clearAllDataWithConfirmation() {
+            if (confirm('Tüm verileriniz kalıcı olarak silinecektir. Emin misiniz?')) {
+                localStorage.clear();
+                state.workouts = [];
+                initNewWorkout();
+                renderDashboard();
+                showToast('Tüm veriler silindi.', 'error');
+            }
+        }
+
+        function changeWeek(direction) {
+            state.currentWeekOffset += direction;
+            const label = state.currentWeekOffset === 0 ? 'Bu Hafta' : (state.currentWeekOffset > 0 ? `+${state.currentWeekOffset}. Hafta` : `${state.currentWeekOffset}. Hafta`);
+            document.getElementById('current-week-label').textContent = label;
+            showToast(`${label} verileri gösteriliyor.`);
+        }
+    </script>
+</body>
+</html>
