@@ -12,11 +12,11 @@
             theme: {
                 extend: {
                     colors: {
-                        darkbg: '#0f172a',
-                        cardbg: '#1e293b',
-                        bordercolor: '#334155',
-                        limeaccent: '#84cc16',
-                        limedark: '#65a30d'
+                        darkbg: '#090d16',
+                        cardbg: '#131c31',
+                        bordercolor: '#1e293b',
+                        limeaccent: '#a3e635',
+                        limedark: '#84cc16'
                     }
                 }
             }
@@ -33,64 +33,64 @@
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <!-- Mobile Sidebar Backdrop -->
-    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden backdrop-blur-sm transition-opacity"></div>
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden backdrop-blur-sm transition-opacity pointer-events-auto"></div>
 
     <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 w-64 bg-cardbg border-r border-bordercolor flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-xl">
+    <aside id="sidebar" class="fixed md:static inset-y-0 left-0 z-40 w-72 bg-cardbg/95 backdrop-blur-md border-r border-bordercolor flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl pointer-events-auto">
         <div class="p-6 border-b border-bordercolor flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="bg-limeaccent text-slate-950 p-2.5 rounded-xl font-bold flex items-center justify-center shadow-lg shadow-limeaccent/20">
                     <i data-lucide="dumbbell" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg tracking-tight text-white">FitGünlük</h1>
+                    <h1 class="font-extrabold text-lg tracking-tight text-white">FitGünlük</h1>
                     <p class="text-xs text-slate-400">Antrenman & Performans</p>
                 </div>
             </div>
-            <button id="close-sidebar" class="md:hidden text-slate-400 hover:text-white transition-colors">
+            <button id="close-sidebar" type="button" class="md:hidden text-slate-400 hover:text-white transition-colors p-2 cursor-pointer">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
         </div>
 
         <nav class="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto">
-            <button onclick="switchTab('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left bg-limeaccent text-slate-950 shadow-lg shadow-limeaccent/10" data-target="dashboard">
+            <button type="button" onclick="switchTab('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left bg-limeaccent text-slate-950 shadow-lg shadow-limeaccent/20 cursor-pointer" data-target="dashboard">
                 <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
                 Ana Sayfa
             </button>
-            <button onclick="switchTab('workout')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="workout">
+            <button type="button" onclick="switchTab('workout')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="workout">
                 <i data-lucide="dumbbell" class="w-5 h-5"></i>
                 Antrenman Yap
             </button>
-            <button onclick="switchTab('profile')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="profile">
+            <button type="button" onclick="switchTab('profile')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="profile">
                 <i data-lucide="user" class="w-5 h-5"></i>
                 Kişisel Bilgiler & Bilim
             </button>
-            <button onclick="switchTab('overload')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="overload">
+            <button type="button" onclick="switchTab('overload')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="overload">
                 <i data-lucide="trending-up" class="w-5 h-5"></i>
                 Progressive Overload
             </button>
-            <button onclick="switchTab('history')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="history">
+            <button type="button" onclick="switchTab('history')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="history">
                 <i data-lucide="calendar" class="w-5 h-5"></i>
                 Geçmiş
             </button>
-            <button onclick="switchTab('stats')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="stats">
+            <button type="button" onclick="switchTab('stats')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="stats">
                 <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
                 İstatistikler
             </button>
-            <button onclick="switchTab('records')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="records">
+            <button type="button" onclick="switchTab('records')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="records">
                 <i data-lucide="trophy" class="w-5 h-5"></i>
                 Rekorlar
             </button>
-            <button onclick="switchTab('settings')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white" data-target="settings">
+            <button type="button" onclick="switchTab('settings')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-left text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer" data-target="settings">
                 <i data-lucide="settings" class="w-5 h-5"></i>
                 Ayarlar
             </button>
         </nav>
 
         <div class="p-4 border-t border-bordercolor">
-            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-bordercolor/50 flex items-center justify-between">
+            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-bordercolor/60 flex items-center justify-between shadow-inner">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-limeaccent font-bold shadow-inner">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-limeaccent font-bold shadow">
                         U
                     </div>
                     <div>
@@ -105,15 +105,15 @@
     <!-- Main Content Wrapper -->
     <div class="flex-1 flex flex-col min-w-0">
         <!-- Top Mobile Header -->
-        <header class="md:hidden bg-cardbg border-b border-bordercolor p-4 flex items-center justify-between sticky top-0 z-20 shadow-md">
-            <button id="open-sidebar" class="text-slate-300 hover:text-white p-1 transition-colors">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+        <header class="md:hidden bg-cardbg/95 backdrop-blur-md border-b border-bordercolor p-4 flex items-center justify-between sticky top-0 z-20 shadow-md">
+            <button id="open-sidebar" type="button" class="text-slate-300 hover:text-white p-2 rounded-xl bg-slate-800/60 transition-colors cursor-pointer">
+                <i data-lucide="menu" class="w-5 h-5"></i>
             </button>
-            <span class="font-bold text-base flex items-center gap-2 text-white">
+            <span class="font-extrabold text-base flex items-center gap-2 text-white">
                 <i data-lucide="dumbbell" class="w-5 h-5 text-limeaccent"></i>
                 FitGünlük
             </span>
-            <div class="w-6"></div>
+            <div class="w-9"></div>
         </header>
 
         <!-- Dynamic Content Area -->
@@ -123,10 +123,10 @@
             <section id="tab-dashboard" class="tab-content space-y-6 transition-all duration-300">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-white">Fitness & Antrenman Günlüğü</h2>
+                        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">Fitness & Antrenman Günlüğü</h2>
                         <p class="text-slate-400 text-sm mt-1">Antrenmanlarını kaydet, ilerlemeni takip et ve performansını analiz et.</p>
                     </div>
-                    <button onclick="switchTab('workout'); initNewWorkout();" class="bg-limeaccent hover:bg-limedark text-slate-950 font-semibold px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-limeaccent/20 hover:scale-[1.02] active:scale-[0.98]">
+                    <button type="button" onclick="switchTab('workout'); initNewWorkout();" class="bg-limeaccent hover:bg-limedark text-slate-950 font-bold px-5 py-3 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-limeaccent/20 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                         <i data-lucide="plus" class="w-5 h-5"></i>
                         Yeni Antrenman
                     </button>
@@ -134,9 +134,9 @@
 
                 <!-- Summary Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-400 text-sm font-medium">Bu Haftaki Antrenman</span>
+                            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Bu Haftaki Antrenman</span>
                             <div class="p-2.5 bg-limeaccent/10 text-limeaccent rounded-xl">
                                 <i data-lucide="activity" class="w-5 h-5"></i>
                             </div>
@@ -147,9 +147,9 @@
                         </div>
                     </div>
 
-                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-400 text-sm font-medium">Haftalık Tonaj</span>
+                            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Haftalık Tonaj</span>
                             <div class="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl">
                                 <i data-lucide="trending-up" class="w-5 h-5"></i>
                             </div>
@@ -160,9 +160,9 @@
                         </div>
                     </div>
 
-                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-400 text-sm font-medium">Toplam Süre</span>
+                            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Toplam Süre</span>
                             <div class="p-2.5 bg-amber-500/10 text-amber-400 rounded-xl">
                                 <i data-lucide="clock" class="w-5 h-5"></i>
                             </div>
@@ -173,9 +173,9 @@
                         </div>
                     </div>
 
-                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-lg hover:border-bordercolor/80 transition-all">
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-2xl relative overflow-hidden shadow-xl">
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-400 text-sm font-medium">Yakılan Kalori</span>
+                            <span class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Yakılan Kalori</span>
                             <div class="p-2.5 bg-orange-500/10 text-orange-400 rounded-xl">
                                 <i data-lucide="flame" class="w-5 h-5"></i>
                             </div>
@@ -189,30 +189,30 @@
 
                 <!-- Weekly Chart & Summary Card Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col shadow-lg">
+                    <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col shadow-xl">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                            <h3 class="font-bold text-base text-white flex items-center gap-2">
                                 <i data-lucide="bar-chart-2" class="w-5 h-5 text-limeaccent"></i>
                                 Haftalık Tonaj Dağılımı
                             </h3>
-                            <div class="flex items-center gap-2">
-                                <button onclick="changeWeek(-1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow-sm" title="Önceki Hafta">
+                            <div class="flex items-center gap-2 bg-slate-900/80 p-1 rounded-xl border border-bordercolor">
+                                <button type="button" onclick="changeWeek(-1)" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow-sm cursor-pointer" title="Önceki Hafta">
                                     <i data-lucide="chevron-left" class="w-4 h-4"></i>
                                 </button>
-                                <span id="current-week-label" class="text-xs font-semibold text-slate-300 px-2">Bu Hafta</span>
-                                <button onclick="changeWeek(1)" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow-sm" title="Sonraki Hafta">
+                                <span id="current-week-label" class="text-xs font-bold text-slate-200 px-2">Bu Hafta</span>
+                                <button type="button" onclick="changeWeek(1)" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shadow-sm cursor-pointer" title="Sonraki Hafta">
                                     <i data-lucide="chevron-right" class="w-4 h-4"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="flex-1 relative min-h-[250px] flex items-center justify-center">
+                        <div class="flex-1 relative min-h-[260px] flex items-center justify-center">
                             <canvas id="weeklyVolumeChart"></canvas>
                         </div>
                     </div>
 
-                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col justify-between shadow-lg">
+                    <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col justify-between shadow-xl">
                         <div>
-                            <h3 class="font-bold text-lg text-white flex items-center gap-2 mb-4">
+                            <h3 class="font-bold text-base text-white flex items-center gap-2 mb-4">
                                 <i data-lucide="award" class="w-5 h-5 text-limeaccent"></i>
                                 Bu Haftanın Özeti
                             </h3>
@@ -236,7 +236,7 @@
                             </div>
                         </div>
                         <div class="mt-6 pt-4 border-t border-bordercolor">
-                            <button onclick="switchTab('history')" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <button type="button" onclick="switchTab('history')" class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-bold transition-colors flex items-center justify-center gap-2 border border-bordercolor shadow-sm cursor-pointer">
                                 Geçmişe Git
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
@@ -245,13 +245,13 @@
                 </div>
 
                 <!-- Recent Workouts List -->
-                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl shadow-lg">
+                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl shadow-xl">
                     <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
                             <i data-lucide="clock" class="w-5 h-5 text-limeaccent"></i>
                             Son Antrenmanlar
                         </h3>
-                        <button onclick="switchTab('history')" class="text-xs font-semibold text-limeaccent hover:underline">Tümünü Gör</button>
+                        <button type="button" onclick="switchTab('history')" class="text-xs font-bold text-limeaccent hover:underline cursor-pointer">Tümünü Gör</button>
                     </div>
                     <div id="dashboard-recent-list" class="space-y-3"></div>
                 </div>
@@ -259,23 +259,23 @@
 
             <!-- ================= WORKOUT TAB ================= -->
             <section id="tab-workout" class="tab-content hidden space-y-6 transition-all duration-300">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between flex-wrap gap-4">
                     <div>
                         <h2 id="workout-section-title" class="text-2xl font-bold tracking-tight text-white">Antrenman Yap / Düzenle</h2>
                         <p id="workout-section-subtitle" class="text-slate-400 text-sm mt-1">Hareketleri ekle, setleri yaz, anlık notlarını düş ve tamamla.</p>
                     </div>
-                    <button onclick="cancelWorkout()" class="text-xs font-semibold text-red-400 hover:text-red-300 px-3.5 py-2 rounded-xl bg-red-500/10 border border-red-500/20 transition-all">Seansı İptal Et</button>
+                    <button type="button" onclick="cancelWorkout()" class="text-xs font-semibold text-red-400 hover:text-red-300 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 transition-all shadow-sm cursor-pointer">Seansı İptal Et</button>
                 </div>
 
-                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-6 shadow-xl">
+                <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-6 shadow-2xl">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1.5">Tarih</label>
-                            <input type="date" id="workout-date" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                            <input type="date" id="workout-date" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1.5">Antrenman Türü</label>
-                            <select id="workout-type" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                            <select id="workout-type" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
                                 <option value="Push">Push (İtiş)</option>
                                 <option value="Pull">Pull (Çekiş)</option>
                                 <option value="Legs">Legs (Bacak)</option>
@@ -292,26 +292,26 @@
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-400 mb-1.5">Antrenman Adı</label>
-                            <input type="text" id="workout-name" placeholder="Örn: Push A, Göğüs & Triceps" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                            <input type="text" id="workout-name" placeholder="Örn: Push A, Göğüs & Triceps" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
                         </div>
                     </div>
 
                     <div class="border-t border-bordercolor pt-6 space-y-4">
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between flex-wrap gap-3">
                             <h3 class="font-bold text-base text-white flex items-center gap-2">
                                 <i data-lucide="list-plus" class="w-5 h-5 text-limeaccent"></i>
                                 Hareketler ve Setler
                             </h3>
-                            <button onclick="openExerciseModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-colors border border-bordercolor shadow-sm">
+                            <button type="button" onclick="openExerciseModal()" class="bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-colors border border-bordercolor shadow-sm cursor-pointer">
                                 <i data-lucide="plus" class="w-4 h-4 text-limeaccent"></i>
                                 + Hareket Ekle
                             </button>
                         </div>
 
                         <!-- Info Banner for Progressive Overload Auto Fill -->
-                        <div class="p-3 bg-limeaccent/10 border border-limeaccent/20 rounded-xl flex items-center gap-3 text-xs text-limeaccent">
+                        <div class="p-3.5 bg-limeaccent/10 border border-limeaccent/20 rounded-xl flex items-center gap-3 text-xs text-limeaccent shadow-inner">
                             <i data-lucide="sparkles" class="w-4 h-4 shrink-0"></i>
-                            <span>Seçtiğiniz hareketin ağırlık ve set sayıları geçmiş kayıtlarınıza ve **Progressive Overload** sistemine göre otomatik dolsun.</span>
+                            <span>Seçtiğiniz hareketin ağırlık ve set sayıları geçmiş kayıtlarınıza ve Progressive Overload sistemine göre otomatik dolsun.</span>
                         </div>
 
                         <div id="active-exercises-list" class="space-y-4"></div>
@@ -332,7 +332,7 @@
                                 <span id="active-total-reps" class="font-extrabold text-white text-lg">0</span>
                             </div>
                         </div>
-                        <button onclick="promptCompleteWorkoutModal()" class="w-full sm:w-auto bg-limeaccent hover:bg-limedark text-slate-950 font-bold px-8 py-3 rounded-xl transition-all shadow-lg shadow-limeaccent/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+                        <button type="button" onclick="promptCompleteWorkoutModal()" class="w-full sm:w-auto bg-limeaccent hover:bg-limedark text-slate-950 font-extrabold px-8 py-3.5 rounded-2xl transition-all shadow-xl shadow-limeaccent/20 flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                             <i data-lucide="check-circle" class="w-5 h-5"></i>
                             <span id="complete-workout-btn-text">Antrenmanı Tamamla</span>
                         </button>
@@ -350,23 +350,23 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <!-- Personal Info Form Card -->
                     <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 shadow-xl">
-                        <h3 class="font-bold text-lg text-white flex items-center gap-2 border-b border-bordercolor pb-3">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2 border-b border-bordercolor pb-3">
                             <i data-lucide="user-cog" class="w-5 h-5 text-limeaccent"></i>
                             Kişisel Bilgiler Paneli
                         </h3>
                         <div class="space-y-3">
                             <div>
                                 <label class="block text-xs font-medium text-slate-400 mb-1">Ad / Sporcu Adı</label>
-                                <input type="text" id="profile-input-name" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" placeholder="Adınız">
+                                <input type="text" id="profile-input-name" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" placeholder="Adınız">
                             </div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-xs font-medium text-slate-400 mb-1">Yaş</label>
-                                    <input type="number" id="profile-input-age" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="30">
+                                    <input type="number" id="profile-input-age" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="30">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-slate-400 mb-1">Cinsiyet</label>
-                                    <select id="profile-input-gender" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                    <select id="profile-input-gender" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
                                         <option value="Erkek">Erkek</option>
                                         <option value="Kadın">Kadın</option>
                                     </select>
@@ -375,22 +375,22 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="block text-xs font-medium text-slate-400 mb-1">Kilo (kg)</label>
-                                    <input type="number" step="0.5" id="profile-input-weight" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="70">
+                                    <input type="number" step="0.5" id="profile-input-weight" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="70">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-slate-400 mb-1">Boy (cm)</label>
-                                    <input type="number" id="profile-input-height" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="170">
+                                    <input type="number" id="profile-input-height" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors" value="170">
                                 </div>
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-400 mb-1">Antrenman Seviyesi</label>
-                                <select id="profile-input-level" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                                <select id="profile-input-level" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
                                     <option value="Başlangıç">Başlangıç (&lt; 1 yıl)</option>
                                     <option value="Orta Seviye" selected>Orta Seviye (1-3 yıl)</option>
                                     <option value="İleri Düzey">İleri Düzey (3+ yıl)</option>
                                 </select>
                             </div>
-                            <button onclick="saveUserProfile()" class="w-full mt-2 bg-limeaccent hover:bg-limedark text-slate-950 font-bold py-2.5 rounded-xl transition-all text-sm flex items-center justify-center gap-2 shadow-md">
+                            <button type="button" onclick="saveUserProfile()" class="w-full mt-2 bg-limeaccent hover:bg-limedark text-slate-950 font-bold py-3 rounded-xl transition-all text-sm flex items-center justify-center gap-2 shadow-lg shadow-limeaccent/20 cursor-pointer">
                                 <i data-lucide="save" class="w-4 h-4"></i> Bilgileri Kaydet
                             </button>
                         </div>
@@ -398,46 +398,46 @@
 
                     <!-- Scientific Frequency Guidelines -->
                     <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 shadow-xl">
-                        <div class="border-b border-bordercolor pb-3 flex items-center justify-between">
-                            <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                        <div class="border-b border-bordercolor pb-3 flex items-center justify-between flex-wrap gap-2">
+                            <h3 class="font-bold text-base text-white flex items-center gap-2">
                                 <i data-lucide="book-open" class="w-5 h-5 text-limeaccent"></i>
                                 Bilimsel Çalışmalara Göre Haftalık Sıklık Rehberi
                             </h3>
-                            <span class="text-xs bg-limeaccent/10 text-limeaccent px-2.5 py-1 rounded-lg font-semibold">Hipertrofi Optimizasyonu</span>
+                            <span class="text-xs bg-limeaccent/10 text-limeaccent px-3 py-1 rounded-xl font-bold">Hipertrofi Optimizasyonu</span>
                         </div>
                         <p class="text-xs text-slate-400 leading-relaxed">
                             Güncel egzersiz bilimi araştırmaları (Schoenfeld ve ark., 2016; Helms ve ark.), kas protein sentezinin (MPS) antrenmandan sonra yaklaşık 48 saat içinde bazal seviyelere döndüğünü göstermektedir. Bu nedenle, çoğu kas grubunun haftada <strong>2 ila 3 kez</strong> çalıştırılması, haftalık hacmin (set sayısının) bölünerek daha yüksek kaliteli tekrarlarla yapılmasına olanak tanır ve hipertrofiyi maksimize eder.
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                            <div class="bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-1">
                                 <div class="flex items-center justify-between">
                                     <span class="font-bold text-white text-sm">Göğüs (Chest)</span>
-                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2.5 py-1 rounded-lg">2 - 3 gün / hafta</span>
                                 </div>
                                 <p class="text-xs text-slate-400">İdeal Set: 10-16 set/hafta. Press ve fly hareketleri dengelenmelidir.</p>
                             </div>
 
-                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                            <div class="bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-1">
                                 <div class="flex items-center justify-between">
                                     <span class="font-bold text-white text-sm">Sırt (Back / Lats)</span>
-                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2.5 py-1 rounded-lg">2 - 3 gün / hafta</span>
                                 </div>
                                 <p class="text-xs text-slate-400">İdeal Set: 12-18 set/hafta. Hem dikey (pull-down) hem yatay çekişler şarttır.</p>
                             </div>
 
-                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                            <div class="bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-1">
                                 <div class="flex items-center justify-between">
                                     <span class="font-bold text-white text-sm">Bacak (Quadriceps & Hamstring)</span>
-                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2.5 py-1 rounded-lg">2 - 3 gün / hafta</span>
                                 </div>
                                 <p class="text-xs text-slate-400">İdeal Set: 12-16 set/hafta. Derin kas hasarı yarattığı için yeterli dinlenme şarttır.</p>
                             </div>
 
-                            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-1">
+                            <div class="bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-1">
                                 <div class="flex items-center justify-between">
                                     <span class="font-bold text-white text-sm">Omuz (Shoulders)</span>
-                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">2 - 3 gün / hafta</span>
+                                    <span class="text-xs font-extrabold text-limeaccent bg-limeaccent/10 px-2.5 py-1 rounded-lg">2 - 3 gün / hafta</span>
                                 </div>
                                 <p class="text-xs text-slate-400">İdeal Set: 10-14 set/hafta. Özellikle yan omuz (lateral head) yüksek sıklığı çok iyi tolere eder.</p>
                             </div>
@@ -455,11 +455,11 @@
 
                 <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-4 shadow-xl border-l-4 border-l-limeaccent">
                     <div class="flex items-center gap-3 border-b border-bordercolor pb-3">
-                        <div class="p-2.5 bg-limeaccent/10 text-limeaccent rounded-xl">
+                        <div class="p-2.5 bg-limeaccent/10 text-limeaccent rounded-xl shadow">
                             <i data-lucide="zap" class="w-6 h-6"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-white text-lg">Geçmiş Verilere Göre Sonraki Seans Hedef Asistanı</h3>
+                            <h3 class="font-bold text-white text-base">Geçmiş Verilere Göre Sonraki Seans Hedef Asistanı</h3>
                             <p class="text-xs text-slate-400">Antrenmana hareket eklerken aşağıdaki hesaplanmış ağırlık ve set miktarları otomatik olarak gelecektir.</p>
                         </div>
                     </div>
@@ -493,26 +493,26 @@
                             Hareketler Listesi
                         </h3>
                         <div>
-                            <input type="text" id="stats-search-input" oninput="filterStatsExercises()" placeholder="Hareket ara..." class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
+                            <input type="text" id="stats-search-input" oninput="filterStatsExercises()" placeholder="Hareket ara..." class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-limeaccent transition-colors">
                         </div>
                         <div class="flex gap-1.5 overflow-x-auto pb-2 scrollbar-none" id="stats-category-tabs">
-                            <button onclick="filterStatsCategory('Tümü')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm">Tümü</button>
-                            <button onclick="filterStatsCategory('Göğüs')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Göğüs</button>
-                            <button onclick="filterStatsCategory('Sırt')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Sırt</button>
-                            <button onclick="filterStatsCategory('Omuz')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Omuz</button>
-                            <button onclick="filterStatsCategory('Bacak')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Bacak</button>
-                            <button onclick="filterStatsCategory('Kol')" class="stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Kol</button>
+                            <button type="button" onclick="filterStatsCategory('Tümü')" class="stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm cursor-pointer">Tümü</button>
+                            <button type="button" onclick="filterStatsCategory('Göğüs')" class="stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Göğüs</button>
+                            <button type="button" onclick="filterStatsCategory('Sırt')" class="stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Sırt</button>
+                            <button type="button" onclick="filterStatsCategory('Omuz')" class="stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Omuz</button>
+                            <button type="button" onclick="filterStatsCategory('Bacak')" class="stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Bacak</button>
+                            <button type="button" onclick="filterStatsCategory('Kol')" class="stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Kol</button>
                         </div>
                         <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="stats-exercise-list"></div>
                     </div>
 
                     <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-6 rounded-2xl flex flex-col h-[600px] shadow-xl">
-                        <div class="flex items-center justify-between pb-4 border-b border-bordercolor">
+                        <div class="flex items-center justify-between pb-4 border-b border-bordercolor flex-wrap gap-2">
                             <div>
                                 <h3 id="stats-chart-title" class="font-bold text-lg text-white">Hareket Seçilmedi</h3>
                                 <p id="stats-chart-subtitle" class="text-xs text-slate-400 mt-0.5">Sol menüden bir hareket seçerek gelişiminizi görün.</p>
                             </div>
-                            <div id="stats-chart-badge" class="hidden px-3 py-1 rounded-lg text-xs font-semibold bg-limeaccent/10 text-limeaccent">Çizgi Grafiği</div>
+                            <div id="stats-chart-badge" class="hidden px-3 py-1 rounded-lg text-xs font-bold bg-limeaccent/10 text-limeaccent border border-limeaccent/20">Çizgi Grafiği</div>
                         </div>
                         <div class="flex-1 relative flex items-center justify-center mt-4">
                             <canvas id="exerciseProgressChart"></canvas>
@@ -538,57 +538,57 @@
                 </div>
 
                 <div class="bg-cardbg border border-bordercolor p-6 rounded-2xl space-y-6 max-w-2xl shadow-xl">
-                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor flex-wrap gap-4">
                         <div>
-                            <h3 class="font-bold text-white">Hareket Listesini ve İsimleri Düzenle</h3>
+                            <h3 class="font-bold text-white text-sm">Hareket Listesini ve İsimleri Düzenle</h3>
                             <p class="text-xs text-slate-400 mt-1">Özel eklediğiniz veya sistemdeki hareket adlarını değiştirin.</p>
                         </div>
-                        <button onclick="openManageExercisesModal()" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 shadow-sm">
+                        <button type="button" onclick="openManageExercisesModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-colors border border-bordercolor flex items-center gap-2 shadow-sm cursor-pointer">
                             <i data-lucide="edit-3" class="w-4 h-4 text-limeaccent"></i>
-                            Hareket Adlarını Düzenle
+                            Düzenle
                         </button>
                     </div>
 
-                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor flex-wrap gap-4">
                         <div>
-                            <h3 class="font-bold text-white">Verileri Dışa Aktar (JSON)</h3>
+                            <h3 class="font-bold text-white text-sm">Verileri Dışa Aktar (JSON)</h3>
                             <p class="text-xs text-slate-400 mt-1">Tüm antrenman geçmişini ve rekorlarını cihazına yedekle.</p>
                         </div>
-                        <button onclick="exportData()" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 shadow-sm">
+                        <button type="button" onclick="exportData()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-colors border border-bordercolor flex items-center gap-2 shadow-sm cursor-pointer">
                             <i data-lucide="download" class="w-4 h-4 text-limeaccent"></i>
                             Dışa Aktar
                         </button>
                     </div>
 
-                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor flex-wrap gap-4">
                         <div>
-                            <h3 class="font-bold text-white">Verileri İçe Aktar</h3>
+                            <h3 class="font-bold text-white text-sm">Verileri İçe Aktar</h3>
                             <p class="text-xs text-slate-400 mt-1">Daha önce dışa aktardığın JSON dosyasını yükle.</p>
                         </div>
-                        <label class="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 cursor-pointer shadow-sm">
+                        <label class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl text-xs transition-colors border border-bordercolor flex items-center gap-2 cursor-pointer shadow-sm">
                             <i data-lucide="upload" class="w-4 h-4 text-limeaccent"></i>
                             Dosya Seç
                             <input type="file" id="import-file-input" accept=".json" onchange="importData(event)" class="hidden">
                         </label>
                     </div>
 
-                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor">
+                    <div class="flex items-center justify-between pb-6 border-b border-bordercolor flex-wrap gap-4">
                         <div>
-                            <h3 class="font-bold text-white">Demo Verileri Yükle</h3>
+                            <h3 class="font-bold text-white text-sm">Demo Verileri Yükle</h3>
                             <p class="text-xs text-slate-400 mt-1">Uygulamayı test etmek için örnek antrenman verileri ekle.</p>
                         </div>
-                        <button onclick="loadDemoData()" class="bg-slate-800 hover:bg-slate-700 text-limeaccent font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-bordercolor flex items-center gap-2 shadow-sm">
+                        <button type="button" onclick="loadDemoData()" class="bg-slate-900 hover:bg-slate-800 text-limeaccent font-semibold px-4 py-2.5 rounded-xl text-xs transition-colors border border-bordercolor flex items-center gap-2 shadow-sm cursor-pointer">
                             <i data-lucide="sparkles" class="w-4 h-4"></i>
                             Demo Yükle
                         </button>
                     </div>
 
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between flex-wrap gap-4">
                         <div>
-                            <h3 class="font-bold text-red-400">Tüm Verileri Sil</h3>
+                            <h3 class="font-bold text-red-400 text-sm">Tüm Verileri Sil</h3>
                             <p class="text-xs text-slate-400 mt-1">Tüm antrenman geçmişin ve ayarların kalıcı olarak silinir.</p>
                         </div>
-                        <button onclick="clearAllDataWithConfirmation()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors border border-red-500/20 flex items-center gap-2 shadow-sm">
+                        <button type="button" onclick="clearAllDataWithConfirmation()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 font-semibold px-4 py-2.5 rounded-xl text-xs transition-colors border border-red-500/20 flex items-center gap-2 shadow-sm cursor-pointer">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                             Tümünü Sil
                         </button>
@@ -600,34 +600,34 @@
     </div>
 
     <!-- ================= EXERCISE SELECTION MODAL ================= -->
-    <div id="exercise-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div id="exercise-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity pointer-events-auto">
         <div class="bg-cardbg border border-bordercolor w-full max-w-lg rounded-2xl p-6 space-y-4 max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
             <div class="flex items-center justify-between border-b border-bordercolor pb-4">
-                <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                <h3 class="font-bold text-base text-white flex items-center gap-2">
                     <i data-lucide="dumbbell" class="w-5 h-5 text-limeaccent"></i>
                     Hareket Seç veya Özel Ekle
                 </h3>
-                <button onclick="closeExerciseModal()" class="text-slate-400 hover:text-white transition-colors">
+                <button type="button" onclick="closeExerciseModal()" class="text-slate-400 hover:text-white transition-colors p-1 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
             <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none" id="modal-category-tabs">
-                <button onclick="filterExerciseCategory('Tümü')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm">Tümü</button>
-                <button onclick="filterExerciseCategory('Göğüs')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Göğüs</button>
-                <button onclick="filterExerciseCategory('Sırt')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Sırt</button>
-                <button onclick="filterExerciseCategory('Omuz')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Omuz</button>
-                <button onclick="filterExerciseCategory('Bacak')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Bacak</button>
-                <button onclick="filterExerciseCategory('Kol')" class="cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors">Kol</button>
+                <button type="button" onclick="filterExerciseCategory('Tümü')" class="cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm cursor-pointer">Tümü</button>
+                <button type="button" onclick="filterExerciseCategory('Göğüs')" class="cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Göğüs</button>
+                <button type="button" onclick="filterExerciseCategory('Sırt')" class="cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Sırt</button>
+                <button type="button" onclick="filterExerciseCategory('Omuz')" class="cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Omuz</button>
+                <button type="button" onclick="filterExerciseCategory('Bacak')" class="cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Bacak</button>
+                <button type="button" onclick="filterExerciseCategory('Kol')" class="cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer">Kol</button>
             </div>
 
-            <div class="bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-3">
+            <div class="bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-3 shadow-inner">
                 <span class="text-xs font-bold text-limeaccent flex items-center gap-1.5">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i> Özel Hareket Tanımla
                 </span>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <input type="text" id="custom-exercise-input" placeholder="Özel hareket adı..." class="bg-slate-950 border border-bordercolor rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-limeaccent transition-colors">
-                    <select id="custom-exercise-category" class="bg-slate-950 border border-bordercolor rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-limeaccent transition-colors">
+                    <input type="text" id="custom-exercise-input" placeholder="Özel hareket adı..." class="bg-slate-950 border border-bordercolor rounded-xl px-3 py-2.5 text-white text-xs focus:outline-none focus:border-limeaccent transition-colors">
+                    <select id="custom-exercise-category" class="bg-slate-950 border border-bordercolor rounded-xl px-3 py-2.5 text-white text-xs focus:outline-none focus:border-limeaccent transition-colors">
                         <option value="Göğüs">Göğüs</option>
                         <option value="Sırt">Sırt</option>
                         <option value="Omuz">Omuz</option>
@@ -636,56 +636,56 @@
                         <option value="Diğer">Diğer</option>
                     </select>
                 </div>
-                <button onclick="addCustomExerciseFromModal()" class="w-full bg-limeaccent hover:bg-limedark text-slate-950 font-bold py-2 rounded-xl text-xs transition-colors shadow-sm flex items-center justify-center gap-1.5">
-                    <i data-lucide="check" class="w-3.5 h-3.5"></i> Listeye ve Havuza Ekle
+                <button type="button" onclick="addCustomExerciseFromModal()" class="w-full bg-limeaccent hover:bg-limedark text-slate-950 font-bold py-2.5 rounded-xl text-xs transition-colors shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i data-lucide="check" class="w-4 h-4"></i> Listeye ve Havuza Ekle
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto space-y-2 max-h-[240px]" id="modal-exercise-list"></div>
+            <div class="flex-1 overflow-y-auto space-y-2 max-h-[240px] pr-1" id="modal-exercise-list"></div>
         </div>
     </div>
 
     <!-- ================= WORKOUT DETAIL MODAL ================= -->
-    <div id="detail-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div id="detail-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity pointer-events-auto">
         <div class="bg-cardbg border border-bordercolor w-full max-w-xl rounded-2xl p-6 space-y-4 max-h-[90vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
             <div class="flex items-center justify-between border-b border-bordercolor pb-4">
                 <div>
-                    <h3 id="detail-modal-title" class="font-bold text-lg text-white">Antrenman Detayı</h3>
+                    <h3 id="detail-modal-title" class="font-bold text-base text-white">Antrenman Detayı</h3>
                     <p id="detail-modal-subtitle" class="text-xs text-slate-400 mt-0.5">Tarih</p>
                 </div>
-                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-white transition-colors">
+                <button type="button" onclick="closeDetailModal()" class="text-slate-400 hover:text-white transition-colors p-1 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto space-y-4" id="detail-modal-content"></div>
+            <div class="flex-1 overflow-y-auto space-y-4 pr-1" id="detail-modal-content"></div>
 
             <div class="border-t border-bordercolor pt-4 flex flex-wrap justify-between items-center gap-2">
-                <button id="detail-delete-btn" onclick="" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-semibold px-3 py-2 rounded-xl transition-colors border border-red-500/20 flex items-center gap-1.5 shadow-sm">
+                <button id="detail-delete-btn" type="button" onclick="" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors border border-red-500/20 flex items-center gap-1.5 shadow-sm cursor-pointer">
                     <i data-lucide="trash-2" class="w-4 h-4"></i> Sil
                 </button>
-                <div class="flex items-center gap-2">
-                    <button id="detail-repeat-btn" onclick="" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-sm">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button id="detail-repeat-btn" type="button" onclick="" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer">
                         <i data-lucide="repeat" class="w-4 h-4"></i> Tekrarla
                     </button>
-                    <button id="detail-edit-btn" onclick="" class="bg-limeaccent hover:bg-limedark text-slate-950 text-xs font-bold px-3 py-2 rounded-xl transition-colors flex items-center gap-1.5 shadow-sm">
+                    <button id="detail-edit-btn" type="button" onclick="" class="bg-limeaccent hover:bg-limedark text-slate-950 text-xs font-extrabold px-3.5 py-2.5 rounded-xl transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer">
                         <i data-lucide="edit-3" class="w-4 h-4"></i> Düzenle
                     </button>
-                    <button onclick="closeDetailModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-3 py-2 rounded-xl transition-colors shadow-sm">Kapat</button>
+                    <button type="button" onclick="closeDetailModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3.5 py-2.5 rounded-xl transition-colors border border-bordercolor shadow-sm cursor-pointer">Kapat</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ================= COMPLETE WORKOUT TIME & CALORIE MODAL ================= -->
-    <div id="complete-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div id="complete-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity pointer-events-auto">
         <div class="bg-cardbg border border-bordercolor w-full max-w-md rounded-2xl p-6 space-y-4 shadow-2xl animate-in fade-in zoom-in duration-200">
             <div class="flex items-center justify-between border-b border-bordercolor pb-3">
-                <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                <h3 class="font-bold text-base text-white flex items-center gap-2">
                     <i data-lucide="check-circle" class="w-5 h-5 text-limeaccent"></i>
                     Antrenmanı Tamamla
                 </h3>
-                <button onclick="closeCompleteModal()" class="text-slate-400 hover:text-white transition-colors">
+                <button type="button" onclick="closeCompleteModal()" class="text-slate-400 hover:text-white transition-colors p-1 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -695,22 +695,22 @@
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Antrenman Süresi (Dakika)</label>
                     <div class="relative">
-                        <input type="number" id="finish-duration" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent" value="60">
-                        <span class="absolute right-3 top-2.5 text-xs text-slate-500">dk</span>
+                        <input type="number" id="finish-duration" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-limeaccent" value="60">
+                        <span class="absolute right-3 top-3 text-xs text-slate-500">dk</span>
                     </div>
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-slate-400 mb-1">Yakılan Kalori (kcal)</label>
                     <div class="relative">
-                        <input type="number" id="finish-calories" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-limeaccent" value="350">
-                        <span class="absolute right-3 top-2.5 text-xs text-slate-500">kcal</span>
+                        <input type="number" id="finish-calories" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-limeaccent" value="350">
+                        <span class="absolute right-3 top-3 text-xs text-slate-500">kcal</span>
                     </div>
                 </div>
             </div>
 
             <div class="pt-3 border-t border-bordercolor flex items-center justify-end gap-3">
-                <button onclick="closeCompleteModal()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700">İptal</button>
-                <button onclick="saveFinishedWorkout()" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-limeaccent hover:bg-limedark text-slate-950 flex items-center gap-1.5 shadow-md">
+                <button type="button" onclick="closeCompleteModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 border border-bordercolor cursor-pointer">İptal</button>
+                <button type="button" onclick="saveFinishedWorkout()" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-limeaccent hover:bg-limedark text-slate-950 flex items-center gap-1.5 shadow-lg shadow-limeaccent/20 cursor-pointer">
                     <i data-lucide="save" class="w-4 h-4"></i> Kaydet ve Bitir
                 </button>
             </div>
@@ -718,14 +718,14 @@
     </div>
 
     <!-- ================= EDIT EXERCISE NAMES MODAL ================= -->
-    <div id="manage-exercises-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div id="manage-exercises-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity pointer-events-auto">
         <div class="bg-cardbg border border-bordercolor w-full max-w-lg rounded-2xl p-6 space-y-4 max-h-[85vh] flex flex-col shadow-2xl animate-in fade-in zoom-in duration-200">
             <div class="flex items-center justify-between border-b border-bordercolor pb-3">
-                <h3 class="font-bold text-lg text-white flex items-center gap-2">
+                <h3 class="font-bold text-base text-white flex items-center gap-2">
                     <i data-lucide="edit-3" class="w-5 h-5 text-limeaccent"></i>
                     Hareket İsimlerini Düzenle
                 </h3>
-                <button onclick="closeManageExercisesModal()" class="text-slate-400 hover:text-white transition-colors">
+                <button type="button" onclick="closeManageExercisesModal()" class="text-slate-400 hover:text-white transition-colors p-1 cursor-pointer">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
@@ -734,7 +734,7 @@
             <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="manage-exercises-list"></div>
 
             <div class="pt-3 border-t border-bordercolor flex justify-end">
-                <button onclick="closeManageExercisesModal()" class="px-5 py-2 rounded-xl text-xs font-semibold bg-limeaccent text-slate-950">Tamam</button>
+                <button type="button" onclick="closeManageExercisesModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-limeaccent hover:bg-limedark text-slate-950 shadow-md cursor-pointer">Tamam</button>
             </div>
         </div>
     </div>
@@ -810,27 +810,54 @@
         });
 
         function setupEventListeners() {
-            document.getElementById('open-sidebar').addEventListener('click', () => {
-                document.getElementById('sidebar').classList.remove('-translate-x-full');
-                document.getElementById('sidebar-backdrop').classList.remove('hidden');
-            });
-            document.getElementById('close-sidebar').addEventListener('click', closeSidebar);
-            document.getElementById('sidebar-backdrop').addEventListener('click', closeSidebar);
+            const openSidebarBtn = document.getElementById('open-sidebar');
+            if(openSidebarBtn) {
+                openSidebarBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const sidebar = document.getElementById('sidebar');
+                    const backdrop = document.getElementById('sidebar-backdrop');
+                    if(sidebar) sidebar.classList.remove('-translate-x-full');
+                    if(backdrop) backdrop.classList.remove('hidden');
+                });
+            }
 
-            document.getElementById('workout-date').addEventListener('change', (e) => {
-                state.activeWorkout.date = e.target.value;
+            const closeSidebarBtn = document.getElementById('close-sidebar');
+            if(closeSidebarBtn) {
+                closeSidebarBtn.addEventListener('click', closeSidebar);
+            }
+
+            const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+            if(sidebarBackdrop) {
+                sidebarBackdrop.addEventListener('click', closeSidebar);
+            }
+
+            // Modal dışına tıklandığında kapanma garantisi (Mobil dokunma optimizasyonu)
+            ['exercise-modal', 'detail-modal', 'complete-modal', 'manage-exercises-modal'].forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if(modal) {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.classList.add('hidden');
+                        }
+                    });
+                }
             });
-            document.getElementById('workout-type').addEventListener('change', (e) => {
-                state.activeWorkout.type = e.target.value;
-            });
-            document.getElementById('workout-name').addEventListener('input', (e) => {
-                state.activeWorkout.name = e.target.value;
-            });
+
+            const workoutDate = document.getElementById('workout-date');
+            if(workoutDate) workoutDate.addEventListener('change', (e) => { state.activeWorkout.date = e.target.value; });
+
+            const workoutType = document.getElementById('workout-type');
+            if(workoutType) workoutType.addEventListener('change', (e) => { state.activeWorkout.type = e.target.value; });
+
+            const workoutName = document.getElementById('workout-name');
+            if(workoutName) workoutName.addEventListener('input', (e) => { state.activeWorkout.name = e.target.value; });
         }
 
         function closeSidebar() {
-            document.getElementById('sidebar').classList.add('-translate-x-full');
-            document.getElementById('sidebar-backdrop').classList.add('hidden');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if(sidebar) sidebar.classList.add('-translate-x-full');
+            if(backdrop) backdrop.classList.add('hidden');
         }
 
         function saveToLocalStorage() {
@@ -855,15 +882,23 @@
         }
 
         function loadProfileToUI() {
-            document.getElementById('profile-input-name').value = state.profile.name || 'Sporcu Profilim';
-            document.getElementById('profile-input-age').value = state.profile.age || 30;
-            document.getElementById('profile-input-gender').value = state.profile.gender || 'Erkek';
-            document.getElementById('profile-input-weight').value = state.profile.weight || 70;
-            document.getElementById('profile-input-height').value = state.profile.height || 170;
-            document.getElementById('profile-input-level').value = state.profile.level || 'Orta Seviye';
+            const pName = document.getElementById('profile-input-name');
+            if(pName) pName.value = state.profile.name || 'Sporcu Profilim';
+            const pAge = document.getElementById('profile-input-age');
+            if(pAge) pAge.value = state.profile.age || 30;
+            const pGender = document.getElementById('profile-input-gender');
+            if(pGender) pGender.value = state.profile.gender || 'Erkek';
+            const pWeight = document.getElementById('profile-input-weight');
+            if(pWeight) pWeight.value = state.profile.weight || 70;
+            const pHeight = document.getElementById('profile-input-height');
+            if(pHeight) pHeight.value = state.profile.height || 170;
+            const pLevel = document.getElementById('profile-input-level');
+            if(pLevel) pLevel.value = state.profile.level || 'Orta Seviye';
 
-            document.getElementById('sidebar-profile-name').textContent = state.profile.name || 'Sporcu Profilim';
-            document.getElementById('sidebar-profile-sub').textContent = `${state.profile.age} Yaş • ${state.profile.weight} kg • ${state.profile.height} cm`;
+            const sideName = document.getElementById('sidebar-profile-name');
+            if(sideName) sideName.textContent = state.profile.name || 'Sporcu Profilim';
+            const sideSub = document.getElementById('sidebar-profile-sub');
+            if(sideSub) sideSub.textContent = `${state.profile.age} Yaş • ${state.profile.weight} kg • ${state.profile.height} cm`;
         }
 
         function saveUserProfile() {
@@ -882,14 +917,15 @@
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if(targetTab) targetTab.classList.remove('hidden');
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-limeaccent', 'text-slate-950', 'shadow-lg', 'shadow-limeaccent/10');
-                btn.classList.add('text-slate-300', 'hover:bg-slate-800/80', 'hover:text-white');
+                btn.classList.remove('bg-limeaccent', 'text-slate-950', 'shadow-lg', 'shadow-limeaccent/20', 'font-bold');
+                btn.classList.add('text-slate-300', 'hover:bg-slate-800/80', 'hover:text-white', 'font-medium');
                 if (btn.getAttribute('data-target') === tabId) {
-                    btn.classList.add('bg-limeaccent', 'text-slate-950', 'shadow-lg', 'shadow-limeaccent/10');
-                    btn.classList.remove('text-slate-300', 'hover:bg-slate-800/80', 'hover:text-white');
+                    btn.classList.add('bg-limeaccent', 'text-slate-950', 'shadow-lg', 'shadow-limeaccent/20', 'font-bold');
+                    btn.classList.remove('text-slate-300', 'hover:bg-slate-800/80', 'hover:text-white', 'font-medium');
                 }
             });
 
@@ -909,6 +945,7 @@
 
         function showToast(msg) {
             const container = document.getElementById('toast-container');
+            if(!container) return;
             const toast = document.createElement('div');
             toast.className = 'bg-slate-900 border border-limeaccent text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 text-sm animate-in fade-in slide-in-from-bottom duration-200 pointer-events-auto';
             toast.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4 text-limeaccent"></i> ${msg}`;
@@ -919,7 +956,6 @@
             }, 3000);
         }
 
-        /* ================= WORKOUT LOGIC & AUTOMATIC OVERLOAD ================= */
         function initNewWorkout() {
             state.activeWorkout = {
                 id: 'w_' + Date.now(),
@@ -931,9 +967,12 @@
                 exercises: [],
                 isEditing: false
             };
-            document.getElementById('workout-section-title').textContent = 'Antrenman Yap';
-            document.getElementById('workout-section-subtitle').textContent = 'Hareketleri ekleyin, setleri yazın, anlık notlarınızı düşüp tamamlayın.';
-            document.getElementById('complete-workout-btn-text').textContent = 'Antrenmanı Tamamla';
+            const sTitle = document.getElementById('workout-section-title');
+            if(sTitle) sTitle.textContent = 'Antrenman Yap';
+            const sSub = document.getElementById('workout-section-subtitle');
+            if(sSub) sSub.textContent = 'Hareketleri ekleyin, setleri yazın, anlık notlarınızı düşüp tamamlayın.';
+            const btnText = document.getElementById('complete-workout-btn-text');
+            if(btnText) btnText.textContent = 'Antrenmanı Tamamla';
             renderActiveWorkoutUI();
         }
 
@@ -949,25 +988,28 @@
         }
 
         function openExerciseModal() {
-            document.getElementById('exercise-modal').classList.remove('hidden');
+            const modal = document.getElementById('exercise-modal');
+            if(modal) modal.classList.remove('hidden');
             filterExerciseCategory(state.selectedModalCategory);
         }
 
         function closeExerciseModal() {
-            document.getElementById('exercise-modal').classList.add('hidden');
+            const modal = document.getElementById('exercise-modal');
+            if(modal) modal.classList.add('hidden');
         }
 
         function filterExerciseCategory(cat) {
             state.selectedModalCategory = cat;
             document.querySelectorAll('#modal-category-tabs button').forEach(btn => {
                 if (btn.textContent.trim() === cat) {
-                    btn.className = 'cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm';
+                    btn.className = 'cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-limeaccent text-slate-950 whitespace-nowrap transition-colors shadow-sm cursor-pointer';
                 } else {
-                    btn.className = 'cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap transition-colors';
+                    btn.className = 'cat-tab px-3.5 py-1.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap transition-colors border border-bordercolor cursor-pointer';
                 }
             });
 
             const list = document.getElementById('modal-exercise-list');
+            if(!list) return;
             list.innerHTML = '';
 
             const filtered = EXERCISE_LIBRARY.filter(e => cat === 'Tümü' || e.category === cat);
@@ -980,14 +1022,14 @@
                 }
 
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between bg-slate-900 border border-bordercolor p-3 rounded-xl hover:border-limeaccent/50 transition-colors cursor-pointer group';
+                item.className = 'flex items-center justify-between bg-slate-900 border border-bordercolor p-3.5 rounded-xl hover:border-limeaccent/50 transition-colors cursor-pointer group shadow-sm';
                 item.onclick = () => selectExerciseFromModal(ex.name);
                 item.innerHTML = `
                     <div>
                         <p class="text-xs font-bold text-white group-hover:text-limeaccent transition-colors">${ex.name}</p>
-                        <p class="text-[10px] text-slate-400">${ex.category} • ${hintText}</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">${ex.category} • ${hintText}</p>
                     </div>
-                    <button class="p-1.5 bg-slate-800 rounded-lg text-limeaccent group-hover:bg-limeaccent group-hover:text-slate-950 transition-all">
+                    <button type="button" class="p-2 bg-slate-800 rounded-lg text-limeaccent group-hover:bg-limeaccent group-hover:text-slate-950 transition-all shadow-sm cursor-pointer">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                     </button>
                 `;
@@ -999,6 +1041,7 @@
         function addCustomExerciseFromModal() {
             const nameInput = document.getElementById('custom-exercise-input');
             const catSelect = document.getElementById('custom-exercise-category');
+            if(!nameInput || !catSelect) return;
             const name = nameInput.value.trim();
             if (!name) return;
 
@@ -1016,7 +1059,6 @@
             let suggestedSets = [];
 
             if (lastSets && lastSets.length > 0) {
-                // Progressive Overload Auto Calculation logic
                 suggestedSets = lastSets.map((s, idx) => {
                     let w = parseFloat(s.weight) || 0;
                     let r = parseInt(s.reps) || 0;
@@ -1044,22 +1086,26 @@
 
             closeExerciseModal();
             renderActiveWorkoutUI();
-            showToast(`${exName} eklendi. Progressive Overload değerleri dolduruldu.`);
+            showToast(`${exName} eklendi.`);
         }
 
         function renderActiveWorkoutUI() {
-            document.getElementById('workout-date').value = state.activeWorkout.date;
-            document.getElementById('workout-type').value = state.activeWorkout.type;
-            document.getElementById('workout-name').value = state.activeWorkout.name;
+            const wDate = document.getElementById('workout-date');
+            if(wDate) wDate.value = state.activeWorkout.date;
+            const wType = document.getElementById('workout-type');
+            if(wType) wType.value = state.activeWorkout.type;
+            const wName = document.getElementById('workout-name');
+            if(wName) wName.value = state.activeWorkout.name;
 
             const list = document.getElementById('active-exercises-list');
+            if(!list) return;
             list.innerHTML = '';
 
             let totalVol = 0, totalSets = 0, totalReps = 0;
 
             state.activeWorkout.exercises.forEach((ex, exIdx) => {
                 const exCard = document.createElement('div');
-                exCard.className = 'bg-slate-900 border border-bordercolor rounded-xl p-4 space-y-3';
+                exCard.className = 'bg-slate-900 border border-bordercolor rounded-xl p-4 space-y-3 shadow-md';
 
                 let setRowsHtml = '';
                 ex.sets.forEach((s, sIdx) => {
@@ -1070,53 +1116,56 @@
                     totalReps += r;
 
                     setRowsHtml += `
-                        <div class="space-y-1.5 bg-slate-950/60 p-2.5 rounded-xl border border-bordercolor/40">
+                        <div class="space-y-2 bg-slate-950 p-3 rounded-xl border border-bordercolor/60 shadow-inner">
                             <div class="flex items-center gap-2">
                                 <span class="w-6 text-xs font-bold text-slate-400 text-center">${sIdx + 1}</span>
                                 <div class="flex-1 flex items-center gap-2">
                                     <div class="flex-1">
-                                        <input type="number" step="0.5" value="${s.weight}" onchange="updateSetVal(${exIdx}, ${sIdx}, 'weight', this.value)" class="w-full bg-slate-900 border border-bordercolor rounded-lg px-3 py-1.5 text-white text-xs text-center focus:border-limeaccent" placeholder="kg">
+                                        <input type="number" step="0.5" value="${s.weight}" onchange="updateSetVal(${exIdx}, ${sIdx}, 'weight', this.value)" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-3 py-2 text-white text-xs text-center focus:border-limeaccent" placeholder="kg">
                                     </div>
-                                    <span class="text-xs text-slate-500">kg x</span>
+                                    <span class="text-xs text-slate-400 font-medium">kg ×</span>
                                     <div class="flex-1">
-                                        <input type="number" value="${s.reps}" onchange="updateSetVal(${exIdx}, ${sIdx}, 'reps', this.value)" class="w-full bg-slate-900 border border-bordercolor rounded-lg px-3 py-1.5 text-white text-xs text-center focus:border-limeaccent" placeholder="tekrar">
+                                        <input type="number" value="${s.reps}" onchange="updateSetVal(${exIdx}, ${sIdx}, 'reps', this.value)" class="w-full bg-slate-900 border border-bordercolor rounded-xl px-3 py-2 text-white text-xs text-center focus:border-limeaccent" placeholder="tekrar">
                                     </div>
-                                    <span class="text-xs text-slate-500">tekrar</span>
+                                    <span class="text-xs text-slate-400 font-medium">tekrar</span>
                                 </div>
-                                <button onclick="removeSet(${exIdx}, ${sIdx})" class="p-1 text-slate-500 hover:text-red-400">
+                                <button type="button" onclick="removeSet(${exIdx}, ${sIdx})" class="p-2 text-slate-500 hover:text-red-400 transition-colors cursor-pointer">
                                     <i data-lucide="trash" class="w-4 h-4"></i>
                                 </button>
                             </div>
                             <div>
-                                <input type="text" value="${s.note || ''}" onchange="updateSetVal(${exIdx}, ${sIdx}, 'note', this.value)" placeholder="Anlık Görüş / Set Notu (Örn: RPE 8, Kolay basıldı)" class="w-full bg-slate-900/80 border border-bordercolor/60 rounded-lg px-2.5 py-1 text-slate-300 text-[11px] focus:outline-none focus:border-limeaccent">
+                                <input type="text" value="${s.note || ''}" onchange="updateSetVal(${exIdx}, ${sIdx}, 'note', this.value)" placeholder="Anlık Görüş / Set Notu (Örn: RPE 8)" class="w-full bg-slate-900/80 border border-bordercolor/60 rounded-xl px-3 py-2 text-slate-300 text-xs focus:outline-none focus:border-limeaccent">
                             </div>
                         </div>
                     `;
                 });
 
                 exCard.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-bordercolor pb-2">
+                    <div class="flex items-center justify-between border-b border-bordercolor pb-3">
                         <span class="font-bold text-white text-sm flex items-center gap-2">
                             <i data-lucide="dumbbell" class="w-4 h-4 text-limeaccent"></i>
                             ${ex.name}
                         </span>
-                        <button onclick="removeExercise(${exIdx})" class="text-xs text-red-400 hover:underline flex items-center gap-1">
+                        <button type="button" onclick="removeExercise(${exIdx})" class="text-xs text-red-400 hover:underline flex items-center gap-1 font-semibold cursor-pointer">
                             <i data-lucide="x" class="w-3.5 h-3.5"></i> Hareketi Kaldır
                         </button>
                     </div>
                     <div class="space-y-2">
                         ${setRowsHtml}
                     </div>
-                    <button onclick="addSetToExercise(${exIdx})" class="w-full py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-limeaccent text-xs font-semibold flex items-center justify-center gap-1">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> + Set Ekle
+                    <button type="button" onclick="addSetToExercise(${exIdx})" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-limeaccent text-xs font-bold flex items-center justify-center gap-1.5 transition-colors border border-bordercolor shadow-sm cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i> + Set Ekle
                     </button>
                 `;
                 list.appendChild(exCard);
             });
 
-            document.getElementById('active-total-volume').textContent = `${totalVol.toLocaleString()} kg`;
-            document.getElementById('active-total-sets').textContent = totalSets;
-            document.getElementById('active-total-reps').textContent = totalReps;
+            const tVol = document.getElementById('active-total-volume');
+            if(tVol) tVol.textContent = `${totalVol.toLocaleString()} kg`;
+            const tSets = document.getElementById('active-total-sets');
+            if(tSets) tSets.textContent = totalSets;
+            const tReps = document.getElementById('active-total-reps');
+            if(tReps) tReps.textContent = totalReps;
 
             lucide.createIcons();
         }
@@ -1153,13 +1202,17 @@
                 showToast("Lütfen önce antrenmana en az bir hareket ekleyin.");
                 return;
             }
-            document.getElementById('finish-duration').value = state.activeWorkout.duration || 60;
-            document.getElementById('finish-calories').value = state.activeWorkout.calories || 350;
-            document.getElementById('complete-modal').classList.remove('hidden');
+            const fDur = document.getElementById('finish-duration');
+            if(fDur) fDur.value = state.activeWorkout.duration || 60;
+            const fCal = document.getElementById('finish-calories');
+            if(fCal) fCal.value = state.activeWorkout.calories || 350;
+            const cModal = document.getElementById('complete-modal');
+            if(cModal) cModal.classList.remove('hidden');
         }
 
         function closeCompleteModal() {
-            document.getElementById('complete-modal').classList.add('hidden');
+            const cModal = document.getElementById('complete-modal');
+            if(cModal) cModal.classList.add('hidden');
         }
 
         function saveFinishedWorkout() {
@@ -1191,15 +1244,15 @@
             switchTab('history');
         }
 
-        /* ================= HISTORY, REPEAT & EDIT LOGIC ================= */
         function renderHistory() {
             const container = document.getElementById('history-list');
+            if(!container) return;
             container.innerHTML = '';
 
             if (state.workouts.length === 0) {
                 container.innerHTML = `
-                    <div class="bg-cardbg border border-bordercolor p-8 rounded-2xl text-center text-slate-400">
-                        <i data-lucide="calendar-x" class="w-10 h-10 mx-auto text-slate-500 mb-2"></i>
+                    <div class="bg-cardbg border border-bordercolor p-10 rounded-2xl text-center text-slate-400 shadow-xl">
+                        <i data-lucide="calendar-x" class="w-12 h-12 mx-auto text-slate-500 mb-3"></i>
                         Henüz kayıtlı geçmiş antrenman bulunmuyor.
                     </div>
                 `;
@@ -1217,25 +1270,25 @@
                 });
 
                 const card = document.createElement('div');
-                card.className = 'bg-cardbg border border-bordercolor p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-limeaccent/40 transition-all shadow-md';
+                card.className = 'bg-cardbg border border-bordercolor p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-limeaccent/40 transition-all shadow-xl';
                 card.innerHTML = `
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <div class="flex items-center gap-2">
-                            <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-limeaccent/10 text-limeaccent">${w.type}</span>
-                            <span class="text-xs text-slate-400">${w.date}</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-limeaccent/10 text-limeaccent">${w.type}</span>
+                            <span class="text-xs text-slate-400 font-medium">${w.date}</span>
                         </div>
                         <h4 class="font-bold text-white text-base">${w.name}</h4>
                         <p class="text-xs text-slate-400">${w.exercises.length} Hareket • ${setsCount} Set • ${vol.toLocaleString()} kg Tonaj • ${w.duration || 60} dk • ${w.calories || 350} kcal</p>
                     </div>
 
-                    <div class="flex items-center gap-2">
-                        <button onclick="repeatWorkout('${w.id}')" class="px-3 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button type="button" onclick="repeatWorkout('${w.id}')" class="px-3.5 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/30 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer">
                             <i data-lucide="repeat" class="w-3.5 h-3.5"></i> Tekrarla
                         </button>
-                        <button onclick="editPastWorkout('${w.id}')" class="px-3 py-2 rounded-xl bg-limeaccent/10 hover:bg-limeaccent/20 text-limeaccent border border-limeaccent/30 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                        <button type="button" onclick="editPastWorkout('${w.id}')" class="px-3.5 py-2 rounded-xl bg-limeaccent/10 hover:bg-limeaccent/20 text-limeaccent border border-limeaccent/30 text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5"></i> Düzenle
                         </button>
-                        <button onclick="openWorkoutDetail('${w.id}')" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors">
+                        <button type="button" onclick="openWorkoutDetail('${w.id}')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors border border-bordercolor shadow-sm cursor-pointer">
                             Detay
                         </button>
                     </div>
@@ -1249,7 +1302,6 @@
             const w = state.workouts.find(item => item.id === id);
             if (!w) return;
 
-            // Progressive Overload kuralına göre geçmiş setleri güncelleyerek aktar
             const updatedExercises = w.exercises.map(ex => {
                 const clonedSets = ex.sets.map(s => {
                     let wVal = parseFloat(s.weight) || 0;
@@ -1280,12 +1332,14 @@
                 isEditing: false
             };
 
-            document.getElementById('workout-section-title').textContent = 'Antrenman Tekrarla';
-            document.getElementById('workout-section-subtitle').textContent = 'Geçmiş hareketler Progressive Overload uygulanarak yeni seansa aktarıldı.';
+            const sTitle = document.getElementById('workout-section-title');
+            if(sTitle) sTitle.textContent = 'Antrenman Tekrarla';
+            const sSub = document.getElementById('workout-section-subtitle');
+            if(sSub) sSub.textContent = 'Geçmiş hareketler Progressive Overload uygulanarak yeni seansa aktarıldı.';
             closeDetailModal();
             switchTab('workout');
             renderActiveWorkoutUI();
-            showToast("Antrenman ve Progressive Overload hedefleri başarıyla yüklendi!");
+            showToast("Antrenman ve Progressive Overload hedefleri yüklendi!");
         }
 
         function editPastWorkout(id) {
@@ -1295,9 +1349,12 @@
             state.activeWorkout = JSON.parse(JSON.stringify(w));
             state.activeWorkout.isEditing = true;
 
-            document.getElementById('workout-section-title').textContent = 'Geçmiş Antrenmanı Düzenle';
-            document.getElementById('workout-section-subtitle').textContent = 'Kayıtlı antrenman verilerini güncelleyin.';
-            document.getElementById('complete-workout-btn-text').textContent = 'Güncellemeleri Kaydet';
+            const sTitle = document.getElementById('workout-section-title');
+            if(sTitle) sTitle.textContent = 'Geçmiş Antrenmanı Düzenle';
+            const sSub = document.getElementById('workout-section-subtitle');
+            if(sSub) sSub.textContent = 'Kayıtlı antrenman verilerini güncelleyin.';
+            const btnText = document.getElementById('complete-workout-btn-text');
+            if(btnText) btnText.textContent = 'Güncellemeleri Kaydet';
 
             closeDetailModal();
             switchTab('workout');
@@ -1308,24 +1365,27 @@
             const w = state.workouts.find(item => item.id === id);
             if (!w) return;
 
-            document.getElementById('detail-modal-title').textContent = w.name;
-            document.getElementById('detail-modal-subtitle').textContent = `${w.date} • ${w.type} • ${w.duration || 60} dk • ${w.calories || 350} kcal`;
+            const dTitle = document.getElementById('detail-modal-title');
+            if(dTitle) dTitle.textContent = w.name;
+            const dSub = document.getElementById('detail-modal-subtitle');
+            if(dSub) dSub.textContent = `${w.date} • ${w.type} • ${w.duration || 60} dk • ${w.calories || 350} kcal`;
 
             const content = document.getElementById('detail-modal-content');
+            if(!content) return;
             content.innerHTML = '';
 
             w.exercises.forEach(ex => {
                 const block = document.createElement('div');
-                block.className = 'bg-slate-900 border border-bordercolor p-3.5 rounded-xl space-y-2';
+                block.className = 'bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-2 shadow-sm';
                 
                 let setHtml = '';
                 ex.sets.forEach((s, idx) => {
-                    const noteHtml = s.note ? `<p class="text-[10px] text-limeaccent mt-0.5">Not: ${s.note}</p>` : '';
+                    const noteHtml = s.note ? `<p class="text-[10px] text-limeaccent mt-1">Not: ${s.note}</p>` : '';
                     setHtml += `
-                        <div class="bg-slate-950 p-2 rounded-lg border border-bordercolor/50 text-xs flex flex-col justify-between">
+                        <div class="bg-slate-950 p-2.5 rounded-xl border border-bordercolor/60 text-xs flex flex-col justify-between shadow-inner">
                             <div class="flex justify-between items-center font-semibold text-slate-300">
                                 <span>Set ${idx + 1}</span>
-                                <span class="text-limeaccent">${s.weight} kg x ${s.reps} tekrar</span>
+                                <span class="text-limeaccent font-bold">${s.weight} kg × ${s.reps} tekrar</span>
                             </div>
                             ${noteHtml}
                         </div>
@@ -1333,7 +1393,7 @@
                 });
 
                 block.innerHTML = `
-                    <h5 class="font-bold text-white text-xs border-b border-bordercolor/60 pb-1.5 flex items-center gap-1.5">
+                    <h5 class="font-bold text-white text-xs border-b border-bordercolor/60 pb-2 flex items-center gap-1.5">
                         <i data-lucide="dumbbell" class="w-3.5 h-3.5 text-limeaccent"></i> ${ex.name}
                     </h5>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -1343,16 +1403,21 @@
                 content.appendChild(block);
             });
 
-            document.getElementById('detail-delete-btn').onclick = () => deleteWorkout(w.id);
-            document.getElementById('detail-repeat-btn').onclick = () => repeatWorkout(w.id);
-            document.getElementById('detail-edit-btn').onclick = () => editPastWorkout(w.id);
+            const delBtn = document.getElementById('detail-delete-btn');
+            if(delBtn) delBtn.onclick = () => deleteWorkout(w.id);
+            const repBtn = document.getElementById('detail-repeat-btn');
+            if(repBtn) repBtn.onclick = () => repeatWorkout(w.id);
+            const edBtn = document.getElementById('detail-edit-btn');
+            if(edBtn) edBtn.onclick = () => editPastWorkout(w.id);
 
-            document.getElementById('detail-modal').classList.remove('hidden');
+            const dModal = document.getElementById('detail-modal');
+            if(dModal) dModal.classList.remove('hidden');
             lucide.createIcons();
         }
 
         function closeDetailModal() {
-            document.getElementById('detail-modal').classList.add('hidden');
+            const dModal = document.getElementById('detail-modal');
+            if(dModal) dModal.classList.add('hidden');
         }
 
         function deleteWorkout(id) {
@@ -1364,26 +1429,28 @@
             showToast("Antrenman silindi.");
         }
 
-        /* ================= MANAGE EXERCISE NAMES ================= */
         function openManageExercisesModal() {
             renderManageExercisesList();
-            document.getElementById('manage-exercises-modal').classList.remove('hidden');
+            const mModal = document.getElementById('manage-exercises-modal');
+            if(mModal) mModal.classList.remove('hidden');
         }
 
         function closeManageExercisesModal() {
-            document.getElementById('manage-exercises-modal').classList.add('hidden');
+            const mModal = document.getElementById('manage-exercises-modal');
+            if(mModal) mModal.classList.add('hidden');
         }
 
         function renderManageExercisesList() {
             const list = document.getElementById('manage-exercises-list');
+            if(!list) return;
             list.innerHTML = '';
 
             EXERCISE_LIBRARY.forEach((ex, idx) => {
                 const row = document.createElement('div');
-                row.className = 'flex items-center gap-2 bg-slate-900 border border-bordercolor p-2 rounded-xl';
+                row.className = 'flex items-center gap-2 bg-slate-900 border border-bordercolor p-2.5 rounded-xl shadow-sm';
                 row.innerHTML = `
-                    <input type="text" value="${ex.name}" onchange="updateExerciseName(${idx}, this.value)" class="flex-1 bg-slate-950 border border-bordercolor rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-limeaccent">
-                    <span class="text-[10px] text-slate-400 px-2 py-1 bg-slate-800 rounded-md">${ex.category}</span>
+                    <input type="text" value="${ex.name}" onchange="updateExerciseName(${idx}, this.value)" class="flex-1 bg-slate-950 border border-bordercolor rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-limeaccent">
+                    <span class="text-[10px] text-slate-400 font-semibold px-2.5 py-1.5 bg-slate-800 rounded-lg">${ex.category}</span>
                 `;
                 list.appendChild(row);
             });
@@ -1398,7 +1465,6 @@
             }
         }
 
-        /* ================= DASHBOARD & CHARTS ================= */
         function renderDashboard() {
             const now = new Date();
             const startOfWeek = new Date(now);
@@ -1422,15 +1488,23 @@
                 });
             });
 
-            document.getElementById('dash-workouts-count').textContent = thisWeekWorkouts.length;
-            document.getElementById('dash-weekly-volume').textContent = `${weeklyVol.toLocaleString()} kg`;
-            document.getElementById('dash-weekly-time').textContent = `${weeklyTime} dk`;
-            document.getElementById('dash-weekly-calories').textContent = `${weeklyCals} kcal`;
+            const dWCount = document.getElementById('dash-workouts-count');
+            if(dWCount) dWCount.textContent = thisWeekWorkouts.length;
+            const dWVol = document.getElementById('dash-weekly-volume');
+            if(dWVol) dWVol.textContent = `${weeklyVol.toLocaleString()} kg`;
+            const dWTime = document.getElementById('dash-weekly-time');
+            if(dWTime) dWTime.textContent = `${weeklyTime} dk`;
+            const dWCal = document.getElementById('dash-weekly-calories');
+            if(dWCal) dWCal.textContent = `${weeklyCals} kcal`;
 
-            document.getElementById('review-count').textContent = thisWeekWorkouts.length;
-            document.getElementById('review-volume').textContent = `${weeklyVol.toLocaleString()} kg`;
-            document.getElementById('review-duration').textContent = `${weeklyTime} dk`;
-            document.getElementById('review-calories').textContent = `${weeklyCals} kcal`;
+            const rCount = document.getElementById('review-count');
+            if(rCount) rCount.textContent = thisWeekWorkouts.length;
+            const rVol = document.getElementById('review-volume');
+            if(rVol) rVol.textContent = `${weeklyVol.toLocaleString()} kg`;
+            const rDur = document.getElementById('review-duration');
+            if(rDur) rDur.textContent = `${weeklyTime} dk`;
+            const rCal = document.getElementById('review-calories');
+            if(rCal) rCal.textContent = `${weeklyCals} kcal`;
 
             renderRecentWorkoutsList();
             renderWeeklyVolumeChart(startOfWeek);
@@ -1438,12 +1512,14 @@
 
         function changeWeek(offset) {
             state.currentWeekOffset += offset;
-            document.getElementById('current-week-label').textContent = state.currentWeekOffset === 0 ? "Bu Hafta" : `${state.currentWeekOffset} Hafta`;
+            const weekLabel = document.getElementById('current-week-label');
+            if(weekLabel) weekLabel.textContent = state.currentWeekOffset === 0 ? "Bu Hafta" : `${state.currentWeekOffset} Hafta`;
             renderDashboard();
         }
 
         function renderRecentWorkoutsList() {
             const container = document.getElementById('dashboard-recent-list');
+            if(!container) return;
             container.innerHTML = '';
 
             const recents = state.workouts.slice(0, 3);
@@ -1454,15 +1530,15 @@
 
             recents.forEach(w => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between bg-slate-900 border border-bordercolor p-3.5 rounded-xl hover:border-limeaccent/40 transition-colors cursor-pointer';
+                item.className = 'flex items-center justify-between bg-slate-900 border border-bordercolor p-4 rounded-xl hover:border-limeaccent/40 transition-colors cursor-pointer shadow-sm';
                 item.onclick = () => openWorkoutDetail(w.id);
                 item.innerHTML = `
                     <div>
                         <div class="flex items-center gap-2">
                             <span class="font-bold text-white text-xs">${w.name}</span>
-                            <span class="text-[10px] text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded">${w.type}</span>
+                            <span class="text-[10px] text-limeaccent bg-limeaccent/10 px-2 py-0.5 rounded font-semibold">${w.type}</span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-0.5">${w.date} • ${w.exercises.length} Hareket • ${w.duration || 60} dk</p>
+                        <p class="text-[11px] text-slate-400 mt-1">${w.date} • ${w.exercises.length} Hareket • ${w.duration || 60} dk</p>
                     </div>
                     <i data-lucide="chevron-right" class="w-4 h-4 text-slate-500"></i>
                 `;
@@ -1472,7 +1548,9 @@
         }
 
         function renderWeeklyVolumeChart(startOfWeek) {
-            const ctx = document.getElementById('weeklyVolumeChart').getContext('2d');
+            const canvasEl = document.getElementById('weeklyVolumeChart');
+            if(!canvasEl) return;
+            const ctx = canvasEl.getContext('2d');
             const days = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
             const volumes = [0, 0, 0, 0, 0, 0, 0];
 
@@ -1501,7 +1579,7 @@
                     datasets: [{
                         label: 'Kaldırılan Tonaj (kg)',
                         data: volumes,
-                        backgroundColor: '#84cc16',
+                        backgroundColor: '#a3e635',
                         borderRadius: 8
                     }]
                 },
@@ -1511,15 +1589,15 @@
                     plugins: { legend: { display: false } },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
-                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
+                        y: { grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } }
                     }
                 }
             });
         }
 
-        /* ================= OVERLOAD & STATS ================= */
         function renderDynamicOverloadAssistant() {
             const container = document.getElementById('dynamic-overload-container');
+            if(!container) return;
             container.innerHTML = '';
 
             const exerciseMap = {};
@@ -1543,7 +1621,7 @@
                 const targetW = maxW + 2.5;
 
                 const card = document.createElement('div');
-                card.className = 'bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-2';
+                card.className = 'bg-slate-900 border border-bordercolor p-4 rounded-xl space-y-2 shadow-sm';
                 card.innerHTML = `
                     <div class="flex items-center justify-between border-b border-bordercolor pb-2">
                         <span class="font-bold text-white text-xs">${exName}</span>
@@ -1566,15 +1644,17 @@
             state.statsSelectedCategory = cat;
             document.querySelectorAll('#stats-category-tabs button').forEach(btn => {
                 btn.className = btn.textContent.trim() === cat ?
-                    'stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-limeaccent text-slate-950 whitespace-nowrap' :
-                    'stats-cat-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 whitespace-nowrap';
+                    'stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-limeaccent text-slate-950 whitespace-nowrap shadow-sm cursor-pointer' :
+                    'stats-cat-tab px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-900 text-slate-300 whitespace-nowrap border border-bordercolor cursor-pointer';
             });
             filterStatsExercises();
         }
 
         function filterStatsExercises() {
-            const search = document.getElementById('stats-search-input').value.toLowerCase();
+            const searchInput = document.getElementById('stats-search-input');
+            const search = searchInput ? searchInput.value.toLowerCase() : '';
             const list = document.getElementById('stats-exercise-list');
+            if(!list) return;
             list.innerHTML = '';
 
             const filtered = EXERCISE_LIBRARY.filter(e => {
@@ -1585,7 +1665,8 @@
 
             filtered.forEach(ex => {
                 const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-bordercolor text-xs font-bold text-slate-300 hover:text-white transition-colors';
+                btn.type = 'button';
+                btn.className = 'w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-bordercolor text-xs font-bold text-slate-300 hover:text-white transition-colors shadow-sm cursor-pointer';
                 btn.textContent = ex.name;
                 btn.onclick = () => selectExerciseForChart(ex.name);
                 list.appendChild(btn);
@@ -1593,9 +1674,12 @@
         }
 
         function selectExerciseForChart(exName) {
-            document.getElementById('stats-chart-title').textContent = exName;
-            document.getElementById('stats-chart-subtitle').textContent = 'Ağırlık Gelişimi (kg)';
-            document.getElementById('stats-chart-badge').classList.remove('hidden');
+            const cTitle = document.getElementById('stats-chart-title');
+            if(cTitle) cTitle.textContent = exName;
+            const cSub = document.getElementById('stats-chart-subtitle');
+            if(cSub) cSub.textContent = 'Ağırlık Gelişimi (kg)';
+            const cBadge = document.getElementById('stats-chart-badge');
+            if(cBadge) cBadge.classList.remove('hidden');
 
             const historyData = [];
             state.workouts.forEach(w => {
@@ -1608,7 +1692,9 @@
 
             historyData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            const ctx = document.getElementById('exerciseProgressChart').getContext('2d');
+            const canvasEl = document.getElementById('exerciseProgressChart');
+            if(!canvasEl) return;
+            const ctx = canvasEl.getContext('2d');
             if (exerciseProgressChartInstance) exerciseProgressChartInstance.destroy();
 
             exerciseProgressChartInstance = new Chart(ctx, {
@@ -1618,8 +1704,8 @@
                     datasets: [{
                         label: 'Maksimum Ağırlık (kg)',
                         data: historyData.map(d => d.weight),
-                        borderColor: '#84cc16',
-                        backgroundColor: 'rgba(132, 204, 22, 0.1)',
+                        borderColor: '#a3e635',
+                        backgroundColor: 'rgba(163, 230, 53, 0.1)',
                         fill: true,
                         tension: 0.3
                     }]
@@ -1628,28 +1714,28 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: { ticks: { color: '#94a3b8' } },
-                        y: { ticks: { color: '#94a3b8' } }
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } }
                     }
                 }
             });
         }
 
-        /* ================= RECORDS ================= */
         function renderRecords() {
             const grid = document.getElementById('records-grid');
+            if(!grid) return;
             grid.innerHTML = '';
 
             const records = {};
             state.workouts.forEach(w => {
                 w.exercises.forEach(e => {
                     e.sets.forEach(s => {
-                        const w = s.weight || 0;
-                        const r = s.reps || 0;
-                        const est1RM = Math.round(w * (1 + r / 30));
+                        const wVal = s.weight || 0;
+                        const rVal = s.reps || 0;
+                        const est1RM = Math.round(wVal * (1 + rVal / 30));
 
-                        if (!records[e.name] || records[e.name].weight < w) {
-                            records[e.name] = { weight: w, reps: r, est1RM: est1RM };
+                        if (!records[e.name] || records[e.name].weight < wVal) {
+                            records[e.name] = { weight: wVal, reps: rVal, est1RM: est1RM };
                         }
                     });
                 });
@@ -1664,15 +1750,15 @@
             keys.forEach(name => {
                 const r = records[name];
                 const card = document.createElement('div');
-                card.className = 'bg-cardbg border border-bordercolor p-4 rounded-2xl space-y-2 shadow-lg';
+                card.className = 'bg-cardbg border border-bordercolor p-5 rounded-2xl space-y-2 shadow-xl';
                 card.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-bordercolor pb-2">
+                    <div class="flex items-center justify-between border-b border-bordercolor pb-2.5">
                         <span class="font-bold text-white text-sm">${name}</span>
                         <i data-lucide="trophy" class="w-4 h-4 text-amber-400"></i>
                     </div>
-                    <div class="flex justify-between items-center text-xs">
-                        <span class="text-slate-400">Maksimum Yük: <b class="text-limeaccent">${r.weight} kg x ${r.reps}</b></span>
-                        <span class="text-slate-400">Tahmini 1RM: <b class="text-white">${r.est1RM} kg</b></span>
+                    <div class="flex justify-between items-center text-xs pt-1">
+                        <span class="text-slate-400">Maks Yük: <b class="text-limeaccent font-bold">${r.weight} kg × ${r.reps}</b></span>
+                        <span class="text-slate-400">Tahmini 1RM: <b class="text-white font-bold">${r.est1RM} kg</b></span>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -1680,7 +1766,6 @@
             lucide.createIcons();
         }
 
-        /* ================= DATA IMPORT & EXPORT ================= */
         function exportData() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state));
             const dlAnchor = document.createElement('a');
